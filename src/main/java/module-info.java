@@ -5,4 +5,6 @@ module com.vhark.grocerystore {
 
     opens com.vhark.grocerystore to javafx.fxml;
     exports com.vhark.grocerystore;
+    exports com.vhark.grocerystore.controller;
+    opens com.vhark.grocerystore.controller to javafx.fxml;
 }

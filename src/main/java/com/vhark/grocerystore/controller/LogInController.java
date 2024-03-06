@@ -1,9 +1,9 @@
-package com.vhark.grocerystore;
+package com.vhark.grocerystore.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class LogInController {
     @FXML
     private Label welcomeText;
 
