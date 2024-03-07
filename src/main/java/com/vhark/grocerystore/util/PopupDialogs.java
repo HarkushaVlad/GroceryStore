@@ -2,7 +2,9 @@ package com.vhark.grocerystore.util;
 
 import javafx.scene.control.Alert;
 
-public class PopupDialogs {
+public final class PopupDialogs {
+
+    private PopupDialogs(){};
 
     public static void showIformationDialog(String titleBar, String headerMessage, String infoMessage) {
         showPopupDialog(Alert.AlertType.INFORMATION, titleBar, headerMessage, infoMessage);

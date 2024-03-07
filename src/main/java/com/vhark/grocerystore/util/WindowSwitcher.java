@@ -7,7 +7,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class WindowSwitcher {
+public final class WindowSwitcher {
+
+    private WindowSwitcher(){};
 
     public static void switchWindow(javafx.scene.control.Labeled triggerElement, String fxmlResourcePath, String title) {
         triggerElement.getScene().getWindow().hide();

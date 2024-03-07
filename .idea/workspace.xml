@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="create log in page">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/PopupDialogs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +17,7 @@
       <list>
         <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -69,10 +68,11 @@
       <recent name="D:\projects\java\CourseWork\GroceryStore\src\main\resources\com\vhark\grocerystore\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\java\CourseWork\GroceryStore" />
+      <recent name="D:\projects\java\CourseWork\GroceryStore\src" />
+      <recent name="D:\projects\java\CourseWork\GroceryStore\src\main" />
       <recent name="D:\projects\java\CourseWork\GroceryStore\src\main\resources\com\vhark\grocerystore\" />
       <recent name="D:\projects\java\CourseWork\GroceryStore\src\main\resources\com\vhark\grocerystore\fonts" />
-      <recent name="D:\projects\java\CourseWork\GroceryStore\src\main\resources\com\vhark\grocerystore" />
-      <recent name="D:\projects\java\CourseWork\GroceryStore\src\main\resources\com\vhark\grocerystore\view" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.vhark.grocerystore.controller" />
@@ -97,7 +97,9 @@
       <workItem from="1709656493750" duration="664000" />
       <workItem from="1709719542621" duration="10950000" />
       <workItem from="1709743767623" duration="8716000" />
-      <workItem from="1709800724038" duration="2125000" />
+      <workItem from="1709800724038" duration="4465000" />
+      <workItem from="1709827591619" duration="1402000" />
+      <workItem from="1709829005581" duration="9861000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />

@@ -1,8 +1,14 @@
 package com.vhark.grocerystore.controller;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.vhark.grocerystore.database.DatabaseHandler;
+import com.vhark.grocerystore.database.constants.DbConfiguration;
+import com.vhark.grocerystore.database.constants.DbUsers;
 import com.vhark.grocerystore.util.WindowSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
