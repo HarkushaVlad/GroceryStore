@@ -2,8 +2,6 @@ package com.vhark.grocerystore;
 
 import com.vhark.grocerystore.util.WindowSwitcher;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
