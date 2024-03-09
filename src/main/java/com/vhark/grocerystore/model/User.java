@@ -1,7 +1,6 @@
 package com.vhark.grocerystore.model;
 
 public class User {
-    private String userId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -10,9 +9,8 @@ public class User {
     private String passwordHash;
     private boolean isEmployee;
 
-    public User(String userId, String firstName, String lastName, String middleName,
+    public User(String firstName, String lastName, String middleName,
                 String idCode, String address, String passwordHash, boolean isEmployee) {
-        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -20,14 +18,6 @@ public class User {
         this.address = address;
         this.passwordHash = passwordHash;
         this.isEmployee = isEmployee;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getFirstName() {
