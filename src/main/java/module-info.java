@@ -2,6 +2,7 @@ module com.vhark.grocerystore {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires jbcrypt;
 
 
     opens com.vhark.grocerystore to javafx.fxml;

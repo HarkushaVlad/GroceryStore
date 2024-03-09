@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="create log in page">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/userDataValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/User.java" afterDir="false" />
     </list>
@@ -104,7 +104,7 @@
       <workItem from="1709827591619" duration="1402000" />
       <workItem from="1709829005581" duration="10957000" />
       <workItem from="1709888987931" duration="4489000" />
-      <workItem from="1709973537872" duration="3227000" />
+      <workItem from="1709973537872" duration="4252000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
