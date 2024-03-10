@@ -23,7 +23,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
-        <TextField fx:id="signUpIdCodeField" layoutX="48.0" layoutY="298.0" prefHeight="26.0" prefWidth="249.0" promptText="Enter your identification code" style="-fx-border-radius: 10; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+        <TextField fx:id="signUpAddressField" layoutX="48.0" layoutY="298.0" prefHeight="26.0" prefWidth="249.0" promptText="Enter your address" style="-fx-border-radius: 10; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
             <cursor>
                 <Cursor fx:constant="TEXT" />
             </cursor>
@@ -64,7 +64,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="signUpAddressField" layoutX="48.0" layoutY="257.0" prefHeight="26.0" prefWidth="249.0" promptText="Enter your address" style="-fx-border-radius: 10; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+      <TextField fx:id="signUpIdCodeField" layoutX="48.0" layoutY="257.0" prefHeight="26.0" prefWidth="249.0" promptText="Enter your identification code" style="-fx-border-radius: 10; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>

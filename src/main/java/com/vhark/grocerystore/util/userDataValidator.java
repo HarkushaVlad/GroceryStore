@@ -6,7 +6,7 @@ public final class userDataValidator {
     private userDataValidator() {};
 
     public static boolean validateUserName(String userName) {
-        return userName.length() >= 2 && Pattern.matches("[A-Za-zА-Яа-яїє']+", userName);
+        return userName.length() >= 2 && Pattern.matches("[A-Za-zА-Яа-яіїє']+", userName);
     }
 
     public static boolean validateUserAddress(String address) {

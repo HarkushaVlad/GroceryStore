@@ -14,8 +14,8 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
-        this.address = address;
         this.idCode = idCode;
+        this.address = address;
         this.passwordHash = passwordHash;
         this.isEmployee = isEmployee;
     }
