@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="create log in page">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/google-java-format.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/SignUpNewUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/UserExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LogInUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/FailedLogInException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/userDataValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/userDataValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/signUpPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/signUpPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/PasswordHash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/util/PasswordHash.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +115,7 @@
       <workItem from="1709992989047" duration="68000" />
       <workItem from="1710056007053" duration="1025000" />
       <workItem from="1710057046424" duration="220000" />
-      <workItem from="1710057279486" duration="7900000" />
+      <workItem from="1710057279486" duration="12103000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />

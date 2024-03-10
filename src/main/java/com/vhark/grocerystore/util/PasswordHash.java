@@ -10,4 +10,8 @@ public final class PasswordHash {
     String salt = BCrypt.gensalt();
     return BCrypt.hashpw(password, salt);
   }
+
+  public static boolean checkPassword(String candidate, String hashed) {
+    return BCrypt.checkpw(candidate, hashed);
+  }
 }
