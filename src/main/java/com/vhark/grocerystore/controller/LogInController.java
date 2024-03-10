@@ -15,29 +15,24 @@ import javafx.scene.control.*;
 
 public class LogInController {
 
-    @FXML
-    private ResourceBundle resources;
+  @FXML private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+  @FXML private URL location;
 
-    @FXML
-    private Button logInButton;
+  @FXML private Button logInButton;
 
-    @FXML
-    private TextField logInIdCodeField;
+  @FXML private TextField logInIdCodeField;
 
-    @FXML
-    private Label logInLabelSwitchToSignUp;
+  @FXML private Label logInLabelSwitchToSignUp;
 
-    @FXML
-    private PasswordField logInPasswordField;
+  @FXML private PasswordField logInPasswordField;
 
-    @FXML
-    void initialize() {
-        logInLabelSwitchToSignUp.setOnMouseClicked(mouseEvent -> {
-            WindowSwitcher.switchWindow(logInLabelSwitchToSignUp, "view/SignUpPage.fxml", "Grocery Store Sign Up");
+  @FXML
+  void initialize() {
+    logInLabelSwitchToSignUp.setOnMouseClicked(
+        mouseEvent -> {
+          WindowSwitcher.switchWindow(
+              logInLabelSwitchToSignUp, "view/SignUpPage.fxml", "Grocery Store Sign Up");
         });
-    }
-
+  }
 }

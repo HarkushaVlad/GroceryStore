@@ -5,9 +5,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.vhark.grocerystore.model.SignUpNewUser;
-import com.vhark.grocerystore.model.User;
 import com.vhark.grocerystore.model.exceptions.UserExistsException;
-import com.vhark.grocerystore.util.PasswordHash;
 import com.vhark.grocerystore.util.PopupDialogs;
 import com.vhark.grocerystore.util.WindowSwitcher;
 import com.vhark.grocerystore.util.userDataValidator;

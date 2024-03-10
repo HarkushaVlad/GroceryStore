@@ -6,23 +6,25 @@ import java.util.Properties;
 
 public final class PropertiesLoader {
 
-    private PropertiesLoader(){};
+  private PropertiesLoader() {}
+  ;
 
-    private static final Properties PROPERTIES = new Properties();
+  private static final Properties PROPERTIES = new Properties();
 
-    static {
-        loadProperties();
+  static {
+    loadProperties();
+  }
+
+  public static String get(String key) {
+    return PROPERTIES.getProperty(key);
+  }
+
+  private static void loadProperties() {
+    try (InputStream inputStream =
+        PropertiesLoader.class.getClassLoader().getResourceAsStream("application.properties")) {
+      PROPERTIES.load(inputStream);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
-
-    public static String get(String key) {
-        return PROPERTIES.getProperty(key);
-    }
-
-    private static void loadProperties() {
-        try (InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream("application.properties")) {
-            PROPERTIES.load(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+  }
 }

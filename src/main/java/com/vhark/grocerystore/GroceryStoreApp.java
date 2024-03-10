@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GroceryStoreApp extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        WindowSwitcher.showWindow("view/LogInPage.fxml", "Grocery Store Log In");
-    }
+  @Override
+  public void start(Stage stage) throws IOException {
+    WindowSwitcher.showWindow("view/LogInPage.fxml", "Grocery Store Log In");
+  }
 
-    public static void main(String[] args) {
-        launch();
-    }
+  public static void main(String[] args) {
+    launch();
+  }
 }
