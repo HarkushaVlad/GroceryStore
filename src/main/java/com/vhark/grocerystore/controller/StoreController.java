@@ -76,18 +76,6 @@ public class StoreController {
   @FXML private Tab storeSettingsTabButton;
 
   @FXML
-  void selectItem(MouseEvent event) {
-    Product product = storeMarketTableView.getSelectionModel().getSelectedItem();
-
-    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
-
-    productDataSingleton.setProductId(product.getProductName());
-    String productName = product.getProductName();
-
-    storeMarketSelectedProductLabel.setText("Selected: " + productName);
-  }
-
-  @FXML
   void initialize() {
     setMarketTableColumns();
     loadDefaultProducts();
