@@ -3,22 +3,29 @@ package com.vhark.grocerystore.model;
 import java.math.BigDecimal;
 
 public class Product {
-  private final int PRODUCT_ID;
+  private String productId;
+
   private String productName;
 
   private BigDecimal price;
 
   private int quantity;
 
-  public Product(int productId, String productName, BigDecimal price, int quantity) {
-    this.PRODUCT_ID = productId;
+  public Product(String productId, String productName, BigDecimal price, int quantity) {
+    this.productId = productId;
     this.productName = productName;
     this.price = price;
     this.quantity = quantity;
   }
 
-  public int getProductId() {
-    return PRODUCT_ID;
+  public Product(String productName, BigDecimal price, int quantity) {
+    this.productName = productName;
+    this.price = price;
+    this.quantity = quantity;
+  }
+
+  public String getProductId() {
+    return productId;
   }
 
   public String getProductName() {

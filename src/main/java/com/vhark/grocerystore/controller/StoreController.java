@@ -6,10 +6,16 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.vhark.grocerystore.model.LoadProducts;
+import com.vhark.grocerystore.model.MakePurchase;
 import com.vhark.grocerystore.model.Product;
+import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
+import com.vhark.grocerystore.model.exceptions.ZeroQuantityException;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
+import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PopupDialogs;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -76,9 +82,24 @@ public class StoreController {
   @FXML private Tab storeSettingsTabButton;
 
   @FXML
+  void selectItem(MouseEvent event) {
+    Product product = storeMarketTableView.getSelectionModel().getSelectedItem();
+
+    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+
+    productDataSingleton.setProductId(product.getProductId());
+    String productName = product.getProductName();
+
+    storeMarketSelectedProductLabel.setText("Selected: " + productName);
+  }
+
+  @FXML
   void initialize() {
+    numbersOfItemsInit();
     setMarketTableColumns();
     loadDefaultProducts();
+
+    storeMarketPurchaseButton.setOnAction(actionEvent -> handleMakePurchase());
   }
 
   private void setMarketTableColumns() {
@@ -93,11 +114,62 @@ public class StoreController {
   private void loadDefaultProducts() {
     try {
       storeMarketTableView.setItems(LoadProducts.getDefaultProducts());
-      System.out.println("here");
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
           "Error", "Something went wrong", "Something went wrong, try again later.");
     }
+  }
+
+  private void handleMakePurchase() {
+    UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+
+    if (productDataSingleton.getProductId() == null) {
+      PopupDialogs.showErrorDialog(
+          "Error", "No Product Selected", "Please select a product before proceeding.");
+      return;
+    }
+
+    if (storeMarketNumberOfItemsField.getText().isEmpty()) {
+      PopupDialogs.showErrorDialog(
+          "Error", "Quantity Not Entered", "Please enter the quantity before proceeding.");
+      return;
+    }
+
+    int quantity = Integer.parseInt(storeMarketNumberOfItemsField.getText());
+
+    MakePurchase makePurchase =
+        new MakePurchase(
+            userDataSingleton.getIdCode(), productDataSingleton.getProductId(), quantity);
+
+    try {
+      makePurchase.addPurchaseToDb();
+      PopupDialogs.showInformationDialog(
+          "Success", "Purchase Completed", "Your purchase was successfully completed.");
+    } catch (ZeroQuantityException e) {
+      PopupDialogs.showErrorDialog(
+          "Error", "Zero Quantity", "Quantity should be greater than zero.");
+    } catch (ExcessiveQuantityException e) {
+      PopupDialogs.showErrorDialog(
+          "Error",
+          "Excessive Quantity",
+          "The quantity of selected products exceeds the available stock");
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private void numbersOfItemsInit() {
+    storeMarketNumberOfItemsField
+        .textProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              if (!newValue.matches("\\d*")) {
+                storeMarketNumberOfItemsField.setText(newValue.replaceAll("\\D", ""));
+              }
+            });
   }
 }

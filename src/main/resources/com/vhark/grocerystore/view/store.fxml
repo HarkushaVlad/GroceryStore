@@ -120,7 +120,7 @@
                            </Button>
                         </children>
                      </VBox>
-                     <TableView fx:id="storeMarketTableView" layoutX="192.0" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #232946; -fx-text-fill: #fffffe; -fx-border-color: #232946;">
+                     <TableView fx:id="storeMarketTableView" layoutX="192.0" onMouseClicked="#selectItem" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #232946; -fx-text-fill: #fffffe; -fx-border-color: #232946;">
                        <columns>
                          <TableColumn fx:id="storeMarketNameColumn" maxWidth="316.0" minWidth="316.0" prefWidth="316.0" style="-fx-background-color: #b8c1ec;" text="Name" />
                          <TableColumn fx:id="storeMarketPriceColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: #acb6e4;" text="Price" />
@@ -129,7 +129,7 @@
                      </TableView>
                      <VBox layoutX="708.0" prefHeight="525.0" prefWidth="192.0" style="-fx-background-color: #4b5a90;">
                         <children>
-                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No product selected" textAlignment="CENTER" textFill="#fffffe">
+                           <Label fx:id="storeMarketSelectedProductLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No product selected" textAlignment="CENTER" textFill="#fffffe">
                               <font>
                                  <Font name="Arial Black" size="12.0" />
                               </font>
@@ -201,7 +201,7 @@
                      </TableView>
                      <VBox layoutX="708.0" prefHeight="525.0" prefWidth="192.0" style="-fx-background-color: #4b5a90;">
                         <children>
-                           <Button fx:id="storeMarketReloadButton1" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #ccbbee; -fx-background-radius: 5; -fx-background-insets: 0;" text="Reload" textFill="#232946">
+                           <Button fx:id="storePurchasesReloadButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #ccbbee; -fx-background-radius: 5; -fx-background-insets: 0;" text="Reload" textFill="#232946">
                               <font>
                                  <Font name="Arial Black" size="12.0" />
                               </font>

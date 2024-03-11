@@ -10,37 +10,35 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoadProducts {
-  String name;
+public final class LoadProducts {
+  private final String NAME;
 
-  String maxPrice;
+  private final String MAX_PRICE;
 
-  String quantity;
+  private final String QUANTITY;
 
-  Boolean inStock;
+  private final Boolean IN_STOCK;
 
-  Boolean outOfStock;
+  private final Boolean OUT_OF_STOCK;
 
   public LoadProducts(
-      String name, String maxPrice, String quantity, Boolean inStock, Boolean outOfStock) {
-    this.name = name;
-    this.maxPrice = maxPrice;
-    this.quantity = quantity;
-    this.inStock = inStock;
-    this.outOfStock = outOfStock;
+      String NAME, String MAX_PRICE, String QUANTITY, Boolean IN_STOCK, Boolean OUT_OF_STOCK) {
+    this.NAME = NAME;
+    this.MAX_PRICE = MAX_PRICE;
+    this.QUANTITY = QUANTITY;
+    this.IN_STOCK = IN_STOCK;
+    this.OUT_OF_STOCK = OUT_OF_STOCK;
   }
 
   public static ObservableList<Product> getDefaultProducts() throws SQLException {
+    String sqlSelectAllProducts = "SELECT * FROM products";
+
     try (Connection connection =
-        DatabaseHandler.getDbConnection(
-            DbUsers.CLIENT.getLoginName(), DbUsers.CLIENT.getPassword())) {
-
-      String sqlSelectAllProducts = "SELECT * FROM products";
-
-      PreparedStatement SelectAllProductsStatement =
-          connection.prepareStatement(sqlSelectAllProducts);
-
-      ResultSet resultSet = SelectAllProductsStatement.executeQuery();
+            DatabaseHandler.getDbConnection(
+                DbUsers.CLIENT.getLoginName(), DbUsers.CLIENT.getPassword());
+        PreparedStatement selectAllProductsStatement =
+            connection.prepareStatement(sqlSelectAllProducts);
+        ResultSet resultSet = selectAllProductsStatement.executeQuery()) {
 
       return getProductObjects(resultSet);
     }
@@ -53,7 +51,7 @@ public class LoadProducts {
     while (resultSet.next()) {
       Product product =
           new Product(
-              resultSet.getInt("product_id"),
+              resultSet.getString("product_id"),
               resultSet.getString("product_name"),
               resultSet.getBigDecimal("price"),
               resultSet.getInt("quantity"));
