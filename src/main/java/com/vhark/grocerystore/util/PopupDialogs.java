@@ -7,7 +7,7 @@ public final class PopupDialogs {
   private PopupDialogs() {}
   ;
 
-  public static void showIformationDialog(
+  public static void showInformationDialog(
       String titleBar, String headerMessage, String infoMessage) {
     showPopupDialog(Alert.AlertType.INFORMATION, titleBar, headerMessage, infoMessage);
   }
