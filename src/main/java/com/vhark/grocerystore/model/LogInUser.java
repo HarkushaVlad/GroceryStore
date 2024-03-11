@@ -3,7 +3,6 @@ package com.vhark.grocerystore.model;
 import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;
 import com.vhark.grocerystore.model.exceptions.FailedLogInException;
-import com.vhark.grocerystore.model.exceptions.UserExistsException;
 import com.vhark.grocerystore.util.PasswordHash;
 
 import java.sql.Connection;
@@ -29,6 +28,10 @@ public final class LogInUser {
       if (isExistUser(connection) && !matchPasswordHashes(connection)) {
         throw new FailedLogInException("Invalid input log in data");
       }
+
+      UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+      userDataSingleton.setIsEmployee(getIsEmployee(connection));
+      userDataSingleton.setIdCode(userIdCode);
     }
   }
 
@@ -55,5 +58,18 @@ public final class LogInUser {
     resultSet.next();
 
     return PasswordHash.checkPassword(userPassword, resultSet.getString("password_hash"));
+  }
+
+  private boolean getIsEmployee(Connection connection) throws SQLException {
+    String sqlSelectIsEmployee = "SELECT is_employee FROM users WHERE identification_code = ?";
+
+    PreparedStatement selectIsEmployeeStatement = connection.prepareStatement(sqlSelectIsEmployee);
+
+    selectIsEmployeeStatement.setString(1, userIdCode);
+
+    ResultSet resultSet = selectIsEmployeeStatement.executeQuery();
+    resultSet.next();
+
+    return resultSet.getBoolean("is_employee");
   }
 }

@@ -4,9 +4,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.vhark.grocerystore.model.UserDataSingleton;
 import com.vhark.grocerystore.model.LogInUser;
 import com.vhark.grocerystore.model.exceptions.FailedLogInException;
-import com.vhark.grocerystore.model.exceptions.UserExistsException;
 import com.vhark.grocerystore.util.PopupDialogs;
 import com.vhark.grocerystore.util.WindowSwitcher;
 import com.vhark.grocerystore.util.userDataValidator;
@@ -47,7 +47,14 @@ public class LogInController {
 
       try {
         logInUser.logIn();
-        WindowSwitcher.switchWindow(logInButton, "view/store.fxml", "Grocery Store");
+
+        UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+
+        if (userDataSingleton.getIsEmployee()) {
+          // employee scene
+        } else {
+          WindowSwitcher.switchWindow(logInButton, "view/store.fxml", "Grocery Store");
+        }
       } catch (FailedLogInException e) {
         applyErrorStyle(logInIdCodeField);
         applyErrorStyle(logInPasswordField);
