@@ -12,9 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public final class SignUpNewUser {
-  User newUser;
+  private final User NEW_USER;
 
-  String userPassword;
+  private final String USER_PASSWORD;
 
   public SignUpNewUser(
       String firstName,
@@ -23,9 +23,9 @@ public final class SignUpNewUser {
       String idCode,
       String address,
       String password) {
-    this.userPassword = password;
+    this.USER_PASSWORD = password;
 
-    newUser =
+    NEW_USER =
         new User(
             firstName,
             lastName,
@@ -44,7 +44,6 @@ public final class SignUpNewUser {
     try (Connection connection =
         DatabaseHandler.getDbConnection(
             DbUsers.USER_AUTH.getLoginName(), DbUsers.USER_AUTH.getPassword())) {
-
       if (isExistUser(connection)) {
         throw new UserExistsException("A user with this identification code already exists");
       }
@@ -52,38 +51,39 @@ public final class SignUpNewUser {
       String sqlInsertNewUser =
           "INSERT INTO users(first_name, last_name, middle_name, identification_code, address, password_hash, is_employee) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-      PreparedStatement insertNewUserStatement = connection.prepareStatement(sqlInsertNewUser);
+      try (PreparedStatement insertNewUserStatement =
+          connection.prepareStatement(sqlInsertNewUser)) {
+        insertNewUserStatement.setString(1, NEW_USER.getFirstName());
+        insertNewUserStatement.setString(2, NEW_USER.getLastName());
+        insertNewUserStatement.setString(3, NEW_USER.getMiddleName());
+        insertNewUserStatement.setString(4, NEW_USER.getIdCode());
+        insertNewUserStatement.setString(5, NEW_USER.getAddress());
+        insertNewUserStatement.setString(6, NEW_USER.getPasswordHash());
+        insertNewUserStatement.setBoolean(7, false);
 
-      insertNewUserStatement.setString(1, newUser.getFirstName());
-      insertNewUserStatement.setString(2, newUser.getLastName());
-      insertNewUserStatement.setString(3, newUser.getMiddleName());
-      insertNewUserStatement.setString(4, newUser.getIdCode());
-      insertNewUserStatement.setString(5, newUser.getAddress());
-      insertNewUserStatement.setString(6, newUser.getPasswordHash());
-      insertNewUserStatement.setBoolean(7, false);
-
-      insertNewUserStatement.execute();
+        insertNewUserStatement.execute();
+      }
     }
   }
 
   private boolean validateUserData() {
-    return userDataValidator.validateUserName(newUser.getFirstName())
-        && userDataValidator.validateUserName(newUser.getLastName())
-        && userDataValidator.validateUserName(newUser.getMiddleName())
-        && userDataValidator.validateUserIdCode(newUser.getIdCode())
-        && userDataValidator.validateUserAddress(newUser.getAddress())
-        && userDataValidator.validateUserPassword(userPassword);
+    return userDataValidator.validateUserName(NEW_USER.getFirstName())
+        && userDataValidator.validateUserName(NEW_USER.getLastName())
+        && userDataValidator.validateUserName(NEW_USER.getMiddleName())
+        && userDataValidator.validateUserIdCode(NEW_USER.getIdCode())
+        && userDataValidator.validateUserAddress(NEW_USER.getAddress())
+        && userDataValidator.validateUserPassword(USER_PASSWORD);
   }
 
   private boolean isExistUser(Connection connection) throws SQLException {
     String sqlSelectUser = "SELECT identification_code FROM users WHERE identification_code = ?";
 
-    PreparedStatement selectUserStatement = connection.prepareStatement(sqlSelectUser);
+    try (PreparedStatement selectUserStatement = connection.prepareStatement(sqlSelectUser)) {
+      selectUserStatement.setString(1, NEW_USER.getIdCode());
 
-    selectUserStatement.setString(1, newUser.getIdCode());
-
-    ResultSet resultSet = selectUserStatement.executeQuery();
-
-    return resultSet.next();
+      try (ResultSet resultSet = selectUserStatement.executeQuery()) {
+        return resultSet.next();
+      }
+    }
   }
 }

@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="create log in page">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/MakePurchase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/ExcessiveQuantityException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/UserIdNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/ZeroQuantityException.java" afterDir="false" />
+    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="implemented purchase functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LoadProducts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LoadProducts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/singletons/ProductDataSingleton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/singletons/ProductDataSingleton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LogInUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LogInUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/SignUpNewUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/SignUpNewUser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +118,7 @@
       <workItem from="1710057279486" duration="15051000" />
       <workItem from="1710080709143" duration="382000" />
       <workItem from="1710151277928" duration="19766000" />
-      <workItem from="1710174333734" duration="4934000" />
+      <workItem from="1710174333734" duration="5704000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
@@ -143,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709743141279</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="implemented purchase functionality">
+      <option name="closed" value="true" />
+      <created>1710179538918</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710179538919</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +163,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="create log in page" />
-    <option name="LAST_COMMIT_MESSAGE" value="create log in page" />
+    <MESSAGE value="implemented purchase functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented purchase functionality" />
   </component>
 </project>
