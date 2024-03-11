@@ -1,4 +1,4 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.singletons;
 
 public class UserDataSingleton {
 

@@ -3,6 +3,7 @@ package com.vhark.grocerystore.model;
 import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;
 import com.vhark.grocerystore.model.exceptions.FailedLogInException;
+import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PasswordHash;
 
 import java.sql.Connection;
