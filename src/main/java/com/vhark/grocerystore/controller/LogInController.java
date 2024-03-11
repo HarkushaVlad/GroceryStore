@@ -47,8 +47,7 @@ public class LogInController {
 
       try {
         logInUser.logIn();
-
-        System.out.println("success!!!!");
+        WindowSwitcher.switchWindow(logInButton, "view/store.fxml", "Grocery Store");
       } catch (FailedLogInException e) {
         applyErrorStyle(logInIdCodeField);
         applyErrorStyle(logInPasswordField);

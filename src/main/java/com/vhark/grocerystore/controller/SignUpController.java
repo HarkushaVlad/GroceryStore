@@ -66,7 +66,12 @@ public class SignUpController {
 
       try {
         signUpNewUser.addNewUserToDb();
-        System.out.println("success!!!!");
+        PopupDialogs.showInformationDialog(
+                "Registration Successful",
+                "Congratulations!",
+                "Your registration was successful. You can now proceed to log in with your credentials.");
+        WindowSwitcher.switchWindow(
+            signUpLabelSwitchToLogIn, "view/LogInPage.fxml", "Grocery Store Log In");
       } catch (UserExistsException e) {
         PopupDialogs.showErrorDialog(
             "Error", "User already exists", "A user with this identification code already exists.");
