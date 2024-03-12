@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="remove ZeroQuantityException">
+    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="implement purchases loading">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/ProductLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/ProductLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +118,7 @@
       <workItem from="1710080709143" duration="382000" />
       <workItem from="1710151277928" duration="19766000" />
       <workItem from="1710174333734" duration="7926000" />
-      <workItem from="1710227594819" duration="17772000" />
+      <workItem from="1710227594819" duration="25076000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
@@ -169,7 +168,31 @@
       <option name="project" value="LOCAL" />
       <updated>1710245016860</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="refactor products loading">
+      <option name="closed" value="true" />
+      <created>1710248299174</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710248299174</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactor getUserIdByCode method">
+      <option name="closed" value="true" />
+      <created>1710255434722</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710255434722</updated>
+    </task>
+    <task id="LOCAL-00009" summary="implement purchases loading">
+      <option name="closed" value="true" />
+      <created>1710255492378</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710255492378</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +215,9 @@
     <MESSAGE value="refactor JDBC Operations with Try-With-Resources" />
     <MESSAGE value="implement filtered product search" />
     <MESSAGE value="remove ZeroQuantityException" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove ZeroQuantityException" />
+    <MESSAGE value="refactor products loading" />
+    <MESSAGE value="refactor getUserIdByCode method" />
+    <MESSAGE value="implement purchases loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement purchases loading" />
   </component>
 </project>

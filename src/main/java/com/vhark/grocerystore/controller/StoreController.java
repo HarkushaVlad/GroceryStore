@@ -136,6 +136,8 @@ public class StoreController {
 
     storePurchasesReloadButton.setOnAction(
         actionEvent -> reloadButtonCLicked(storePurchasesTableView));
+
+    storeSettingsQuitButton.setOnAction(actionEvent -> quitButtonClicked(storeSettingsQuitButton));
   }
 
   private void setMarketTableColumns() {
@@ -348,5 +350,17 @@ public class StoreController {
 
     PopupDialogs.showInformationDialog(
         "Success", "Purchases Reloaded", "The list of purchases has been successfully reloaded.");
+  }
+
+  private void quitButtonClicked(Button storeSettingsQuitButton) {
+    UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+
+    userDataSingleton.setIdCode(null);
+    userDataSingleton.setIsEmployee(false);
+
+    productDataSingleton.setProductId(null);
+
+    WindowSwitcher.switchWindow(storeSettingsQuitButton, "view/LogInPage.fxml", "Grocery Store Log In");
   }
 }
