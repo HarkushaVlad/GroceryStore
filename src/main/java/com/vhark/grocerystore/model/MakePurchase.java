@@ -33,7 +33,7 @@ public final class MakePurchase {
         PreparedStatement insertPurchaseStatement =
             connection.prepareStatement(sqlInsertPurchase); ) {
 
-      insertPurchaseStatement.setInt(1, getUserIdByCode(connection, USER_ID_CODE));
+      insertPurchaseStatement.setInt(1, User.getUserIdByCode(connection, USER_ID_CODE));
       insertPurchaseStatement.setString(2, PRODUCT_ID);
       insertPurchaseStatement.setInt(3, QUANTITY);
 
@@ -77,23 +77,6 @@ public final class MakePurchase {
             "The quantity of selected products exceeds the available stock");
       } else {
         return resQuantity;
-      }
-    }
-  }
-
-  private int getUserIdByCode(Connection connection, String userCode) throws SQLException {
-    String sqlSelectUserId = "SELECT user_id FROM users WHERE identification_code = ?";
-
-    try (PreparedStatement selectUserIdStatement = connection.prepareStatement(sqlSelectUserId)) {
-      selectUserIdStatement.setString(1, userCode);
-
-      try (ResultSet resultSet = selectUserIdStatement.executeQuery()) {
-        if (resultSet.next()) {
-          return resultSet.getInt("user_id");
-        } else {
-          throw new UserIdNotFoundException(
-              "User ID not found for identification code: " + userCode);
-        }
       }
     }
   }

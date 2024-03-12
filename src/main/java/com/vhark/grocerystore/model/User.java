@@ -1,5 +1,12 @@
 package com.vhark.grocerystore.model;
 
+import com.vhark.grocerystore.model.exceptions.UserIdNotFoundException;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
   private String firstName;
   private String lastName;
@@ -80,5 +87,22 @@ public class User {
 
   public void setEmployee(boolean employee) {
     isEmployee = employee;
+  }
+
+  public static int getUserIdByCode(Connection connection, String userCode) throws SQLException {
+    String sqlSelectUserId = "SELECT user_id FROM users WHERE identification_code = ?";
+
+    try (PreparedStatement selectUserIdStatement = connection.prepareStatement(sqlSelectUserId)) {
+      selectUserIdStatement.setString(1, userCode);
+
+      try (ResultSet resultSet = selectUserIdStatement.executeQuery()) {
+        if (resultSet.next()) {
+          return resultSet.getInt("user_id");
+        } else {
+          throw new UserIdNotFoundException(
+                  "User ID not found for identification code: " + userCode);
+        }
+      }
+    }
   }
 }
