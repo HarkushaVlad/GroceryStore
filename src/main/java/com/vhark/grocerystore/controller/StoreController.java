@@ -3,9 +3,10 @@ package com.vhark.grocerystore.controller;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-import com.vhark.grocerystore.model.LoadProducts;
+import com.vhark.grocerystore.model.ProductLoader;
 import com.vhark.grocerystore.model.MakePurchase;
 import com.vhark.grocerystore.model.Product;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
@@ -14,11 +15,8 @@ import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PopupDialogs;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
@@ -33,11 +31,9 @@ public class StoreController {
 
   @FXML private URL location;
 
-  @FXML private CheckBox storeMarketCheckBoxInStock;
-
-  @FXML private CheckBox storeMarketCheckBoxOutOfStock;
-
   @FXML private Label storeMarketMaxPriceLabel;
+
+  @FXML private Label storeMarketMinQuantityLabel;
 
   @FXML private TableColumn<Product, String> storeMarketNameColumn;
 
@@ -49,7 +45,7 @@ public class StoreController {
 
   @FXML private TableColumn<Product, Integer> storeMarketQuantityColumn;
 
-  @FXML private Button storeMarketReloadButton;
+  @FXML private Button storeMarketResetButton;
 
   @FXML private Button storePurchasesReloadButton;
 
@@ -63,7 +59,9 @@ public class StoreController {
 
   @FXML private TableView<Product> storeMarketTableView;
 
-  @FXML private Slider storeMatketSlider;
+  @FXML private Slider storeMarketSliderMaxPrice;
+
+  @FXML private Slider storeMarketSliderMinQuantity;
 
   @FXML private TableColumn<?, ?> storePurchasesDateColumn;
 
@@ -85,6 +83,10 @@ public class StoreController {
   void selectItem(MouseEvent event) {
     Product product = storeMarketTableView.getSelectionModel().getSelectedItem();
 
+    if (product == null) {
+      return;
+    }
+
     ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
 
     productDataSingleton.setProductId(product.getProductId());
@@ -95,25 +97,45 @@ public class StoreController {
 
   @FXML
   void initialize() {
-    numbersOfItemsInit();
+    maxPriceSliderInit(storeMarketSliderMaxPrice, storeMarketMaxPriceLabel);
+    minQuantitySliderInit(storeMarketSliderMinQuantity, storeMarketMinQuantityLabel);
+    numbersOfItemsFieldInit(storeMarketNumberOfItemsField);
     setMarketTableColumns();
-    loadDefaultProducts();
+    handleLoadDefaultProducts();
 
-    storeMarketPurchaseButton.setOnAction(actionEvent -> handleMakePurchase());
+    storeMarketPurchaseButton.setOnAction(
+        actionEvent -> purchaseButtonClicked(storeMarketNumberOfItemsField));
+
+    storeMarketSearchButton.setOnAction(
+        actionEvent ->
+            searchButtonClicked(
+                storeMarketSearchField, storeMarketSliderMaxPrice, storeMarketSliderMinQuantity));
+
+    storeMarketResetButton.setOnAction(
+        actionEvent ->
+            resetButtonClicked(
+                storeMarketSearchField,
+                storeMarketSliderMaxPrice,
+                storeMarketSliderMinQuantity,
+                storeMarketMaxPriceLabel,
+                storeMarketMinQuantityLabel));
   }
 
   private void setMarketTableColumns() {
     storeMarketNameColumn.setCellValueFactory(
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
+
     storeMarketPriceColumn.setCellValueFactory(
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPrice()));
+
     storeMarketQuantityColumn.setCellValueFactory(
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantity()));
   }
 
-  private void loadDefaultProducts() {
+  private void handleLoadDefaultProducts() {
     try {
-      storeMarketTableView.setItems(LoadProducts.getDefaultProducts());
+      ProductLoader productLoader = new ProductLoader();
+      storeMarketTableView.setItems(productLoader.loadDefaultProducts());
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
@@ -121,9 +143,10 @@ public class StoreController {
     }
   }
 
-  private void handleMakePurchase() {
+  private void purchaseButtonClicked(TextField storeMarketNumberOfItemsField) {
     UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
     ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+    String numberOfItems = storeMarketNumberOfItemsField.getText();
 
     if (productDataSingleton.getProductId() == null) {
       PopupDialogs.showErrorDialog(
@@ -131,13 +154,13 @@ public class StoreController {
       return;
     }
 
-    if (storeMarketNumberOfItemsField.getText().isEmpty()) {
+    if (numberOfItems.isEmpty()) {
       PopupDialogs.showErrorDialog(
           "Error", "Quantity Not Entered", "Please enter the quantity before proceeding.");
       return;
     }
 
-    int quantity = Integer.parseInt(storeMarketNumberOfItemsField.getText());
+    int quantity = Integer.parseInt(numberOfItems);
 
     MakePurchase makePurchase =
         new MakePurchase(
@@ -147,6 +170,7 @@ public class StoreController {
       makePurchase.addPurchaseToDb();
       PopupDialogs.showInformationDialog(
           "Success", "Purchase Completed", "Your purchase was successfully completed.");
+      storeMarketNumberOfItemsField.clear();
     } catch (ZeroQuantityException e) {
       PopupDialogs.showErrorDialog(
           "Error", "Zero Quantity", "Quantity should be greater than zero.");
@@ -162,7 +186,40 @@ public class StoreController {
     }
   }
 
-  private void numbersOfItemsInit() {
+  private void searchButtonClicked(
+      TextField storeMarketSearchField,
+      Slider storeMarketSliderMaxPrice,
+      Slider storeMarketSliderMinQuantity) {
+    String name = storeMarketSearchField.getText();
+    double maxPrice = storeMarketSliderMaxPrice.getValue();
+    double minQuantity = storeMarketSliderMinQuantity.getValue();
+
+    try {
+      ProductLoader productLoader = new ProductLoader();
+      storeMarketTableView.setItems(
+          productLoader.loadFilteredProducts(name, maxPrice, minQuantity));
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private void resetButtonClicked(
+      TextField storeMarketSearchField,
+      Slider storeMarketSliderMaxPrice,
+      Slider storeMarketSliderMinQuantity,
+      Label storeMarketMaxPriceLabel,
+      Label storeMarketMinQuantityLabel) {
+    handleLoadDefaultProducts();
+    storeMarketSearchField.clear();
+    storeMarketSliderMaxPrice.setValue(getMaxPrice());
+    storeMarketSliderMinQuantity.setValue(0.0);
+    storeMarketMaxPriceLabel.setText("No limit");
+    storeMarketMinQuantityLabel.setText("No limit");
+  }
+
+  private void numbersOfItemsFieldInit(TextField storeMarketNumberOfItemsField) {
     storeMarketNumberOfItemsField
         .textProperty()
         .addListener(
@@ -171,5 +228,67 @@ public class StoreController {
                 storeMarketNumberOfItemsField.setText(newValue.replaceAll("\\D", ""));
               }
             });
+  }
+
+  private void maxPriceSliderInit(
+      Slider storeMarketSliderMaxPrice, Label storeMarketMaxPriceLabel) {
+    double dbMaxPrice = getMaxPrice();
+
+    storeMarketSliderMaxPrice.setMin(0.0);
+    storeMarketSliderMaxPrice.setMax(dbMaxPrice);
+    storeMarketSliderMaxPrice.setValue(dbMaxPrice);
+    storeMarketSliderMaxPrice.setShowTickLabels(true);
+    storeMarketSliderMaxPrice.setMajorTickUnit(1.0);
+    storeMarketSliderMaxPrice.setMinorTickCount(1);
+    storeMarketSliderMaxPrice.setBlockIncrement(0.05);
+
+    storeMarketSliderMaxPrice
+        .valueProperty()
+        .addListener(
+            ((observable, oldValue, newValue) -> {
+              Double maxPriceValue = storeMarketSliderMaxPrice.getValue();
+              storeMarketMaxPriceLabel.setText(new DecimalFormat("##.##").format(maxPriceValue));
+            }));
+  }
+
+  private void minQuantitySliderInit(
+      Slider storeMarketSliderMinQuantity, Label storeMarketMinQuantityLabel) {
+    double maxQuantity = getMaxQuantity();
+
+    storeMarketSliderMinQuantity.setMin(0.0);
+    storeMarketSliderMinQuantity.setMax(maxQuantity);
+    storeMarketSliderMinQuantity.setValue(0.0);
+    storeMarketSliderMinQuantity.setShowTickLabels(true);
+    storeMarketSliderMinQuantity.setMajorTickUnit(5.0);
+    storeMarketSliderMinQuantity.setMinorTickCount(10);
+    storeMarketSliderMinQuantity.setBlockIncrement(1.0);
+
+    storeMarketSliderMinQuantity
+        .valueProperty()
+        .addListener(
+            ((observable, oldValue, newValue) -> {
+              Double minQuantityValue = storeMarketSliderMinQuantity.getValue();
+              storeMarketMinQuantityLabel.setText(new DecimalFormat("#").format(minQuantityValue));
+            }));
+  }
+
+  private double getMaxPrice() {
+    try {
+      ProductLoader productLoader = new ProductLoader();
+      return productLoader.getMaxPrice();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return 100.0;
+    }
+  }
+
+  private double getMaxQuantity() {
+    try {
+      ProductLoader productLoader = new ProductLoader();
+      return productLoader.getMaxQuantity();
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return 500.0;
+    }
   }
 }
