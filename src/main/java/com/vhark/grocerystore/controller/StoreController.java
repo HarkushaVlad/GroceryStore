@@ -82,16 +82,11 @@ public class StoreController {
   void selectItem(MouseEvent event) {
     Product product = storeMarketTableView.getSelectionModel().getSelectedItem();
 
-    if (product == null) {
-      return;
+    if (product != null) {
+      ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+      productDataSingleton.setProductId(product.getProductId());
+      storeMarketSelectedProductLabel.setText("Selected: " + product.getProductName());
     }
-
-    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
-
-    productDataSingleton.setProductId(product.getProductId());
-    String productName = product.getProductName();
-
-    storeMarketSelectedProductLabel.setText("Selected: " + productName);
   }
 
   @FXML
@@ -100,15 +95,28 @@ public class StoreController {
     minQuantitySliderInit(storeMarketSliderMinQuantity, storeMarketMinQuantityLabel);
     numbersOfItemsFieldInit(storeMarketNumberOfItemsField);
     setMarketTableColumns();
-    handleLoadDefaultProducts();
+    handleLoadProducts(
+        storeMarketSearchField,
+        storeMarketSliderMaxPrice,
+        storeMarketSliderMinQuantity,
+        storeMarketTableView);
 
     storeMarketPurchaseButton.setOnAction(
-        actionEvent -> purchaseButtonClicked(storeMarketNumberOfItemsField));
+        actionEvent ->
+            purchaseButtonClicked(
+                storeMarketNumberOfItemsField,
+                storeMarketSearchField,
+                storeMarketSliderMaxPrice,
+                storeMarketSliderMinQuantity,
+                storeMarketTableView));
 
     storeMarketSearchButton.setOnAction(
         actionEvent ->
-            searchButtonClicked(
-                storeMarketSearchField, storeMarketSliderMaxPrice, storeMarketSliderMinQuantity));
+            handleLoadProducts(
+                storeMarketSearchField,
+                storeMarketSliderMaxPrice,
+                storeMarketSliderMinQuantity,
+                storeMarketTableView));
 
     storeMarketResetButton.setOnAction(
         actionEvent ->
@@ -117,7 +125,8 @@ public class StoreController {
                 storeMarketSliderMaxPrice,
                 storeMarketSliderMinQuantity,
                 storeMarketMaxPriceLabel,
-                storeMarketMinQuantityLabel));
+                storeMarketMinQuantityLabel,
+                storeMarketTableView));
   }
 
   private void setMarketTableColumns() {
@@ -131,10 +140,18 @@ public class StoreController {
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantity()));
   }
 
-  private void handleLoadDefaultProducts() {
+  private void handleLoadProducts(
+      TextField storeMarketSearchField,
+      Slider storeMarketSliderMaxPrice,
+      Slider storeMarketSliderMinQuantity,
+      TableView<Product> storeMarketTableView) {
+
+    String productName = storeMarketSearchField.getText();
+    double maxPrice = storeMarketSliderMaxPrice.getValue();
+    double minQuantity = storeMarketSliderMinQuantity.getValue();
+
     try {
-      ProductLoader productLoader = new ProductLoader();
-      storeMarketTableView.setItems(productLoader.loadDefaultProducts());
+      storeMarketTableView.setItems(ProductLoader.loadProducts(productName, maxPrice, minQuantity));
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
@@ -142,7 +159,13 @@ public class StoreController {
     }
   }
 
-  private void purchaseButtonClicked(TextField storeMarketNumberOfItemsField) {
+  private void purchaseButtonClicked(
+      TextField storeMarketNumberOfItemsField,
+      TextField storeMarketSearchField,
+      Slider storeMarketSliderMaxPrice,
+      Slider storeMarketSliderMinQuantity,
+      TableView<Product> storeMarketTableView) {
+
     UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
     ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
     String numberOfItems = storeMarketNumberOfItemsField.getText();
@@ -167,9 +190,16 @@ public class StoreController {
 
     try {
       makePurchase.addPurchaseToDb();
+
       PopupDialogs.showInformationDialog(
           "Success", "Purchase Completed", "Your purchase was successfully completed.");
       storeMarketNumberOfItemsField.clear();
+
+      handleLoadProducts(
+          storeMarketSearchField,
+          storeMarketSliderMaxPrice,
+          storeMarketSliderMinQuantity,
+          storeMarketTableView);
     } catch (ExcessiveQuantityException e) {
       PopupDialogs.showErrorDialog(
           "Error",
@@ -182,32 +212,20 @@ public class StoreController {
     }
   }
 
-  private void searchButtonClicked(
-      TextField storeMarketSearchField,
-      Slider storeMarketSliderMaxPrice,
-      Slider storeMarketSliderMinQuantity) {
-    String name = storeMarketSearchField.getText();
-    double maxPrice = storeMarketSliderMaxPrice.getValue();
-    double minQuantity = storeMarketSliderMinQuantity.getValue();
-
-    try {
-      ProductLoader productLoader = new ProductLoader();
-      storeMarketTableView.setItems(
-          productLoader.loadFilteredProducts(name, maxPrice, minQuantity));
-    } catch (SQLException e) {
-      e.printStackTrace();
-      PopupDialogs.showErrorDialog(
-          "Error", "Something went wrong", "Something went wrong, try again later.");
-    }
-  }
-
   private void resetButtonClicked(
       TextField storeMarketSearchField,
       Slider storeMarketSliderMaxPrice,
       Slider storeMarketSliderMinQuantity,
       Label storeMarketMaxPriceLabel,
-      Label storeMarketMinQuantityLabel) {
-    handleLoadDefaultProducts();
+      Label storeMarketMinQuantityLabel,
+      TableView<Product> storeMarketTableView) {
+
+    handleLoadProducts(
+        storeMarketSearchField,
+        storeMarketSliderMaxPrice,
+        storeMarketSliderMinQuantity,
+        storeMarketTableView);
+
     storeMarketSearchField.clear();
     storeMarketSliderMaxPrice.setValue(getMaxPrice());
     storeMarketSliderMinQuantity.setValue(0.0);
@@ -270,8 +288,7 @@ public class StoreController {
 
   private double getMaxPrice() {
     try {
-      ProductLoader productLoader = new ProductLoader();
-      return productLoader.getMaxPrice();
+      return ProductLoader.getMaxPrice();
     } catch (SQLException e) {
       e.printStackTrace();
       return 100.0;
@@ -280,8 +297,7 @@ public class StoreController {
 
   private double getMaxQuantity() {
     try {
-      ProductLoader productLoader = new ProductLoader();
-      return productLoader.getMaxQuantity();
+      return ProductLoader.getMaxQuantity();
     } catch (SQLException e) {
       e.printStackTrace();
       return 500.0;
