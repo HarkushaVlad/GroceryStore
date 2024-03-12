@@ -2,17 +2,17 @@ package com.vhark.grocerystore.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-import com.vhark.grocerystore.model.ProductLoader;
-import com.vhark.grocerystore.model.MakePurchase;
-import com.vhark.grocerystore.model.Product;
+import com.vhark.grocerystore.model.*;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PopupDialogs;
+import com.vhark.grocerystore.util.WindowSwitcher;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,17 +62,17 @@ public class StoreController {
 
   @FXML private Slider storeMarketSliderMinQuantity;
 
-  @FXML private TableColumn<?, ?> storePurchasesDateColumn;
+  @FXML private TableColumn<TablePurchase, Date> storePurchasesDateColumn;
 
-  @FXML private TableColumn<?, ?> storePurchasesNameColumn;
+  @FXML private TableColumn<TablePurchase, String> storePurchasesNameColumn;
 
-  @FXML private TableColumn<?, ?> storePurchasesPriceColumn;
+  @FXML private TableColumn<TablePurchase, Double> storePurchasesPriceColumn;
 
-  @FXML private TableColumn<?, ?> storePurchasesQuantityColumn;
+  @FXML private TableColumn<TablePurchase, Integer> storePurchasesQuantityColumn;
 
   @FXML private Tab storePurchasesTabButton;
 
-  @FXML private TableView<?> storePurchasesTableView;
+  @FXML private TableView<TablePurchase> storePurchasesTableView;
 
   @FXML private Button storeSettingsQuitButton;
 
@@ -94,12 +94,17 @@ public class StoreController {
     maxPriceSliderInit(storeMarketSliderMaxPrice, storeMarketMaxPriceLabel);
     minQuantitySliderInit(storeMarketSliderMinQuantity, storeMarketMinQuantityLabel);
     numbersOfItemsFieldInit(storeMarketNumberOfItemsField);
+
     setMarketTableColumns();
+    setPurchasesTableColumns();
+
     handleLoadProducts(
         storeMarketSearchField,
         storeMarketSliderMaxPrice,
         storeMarketSliderMinQuantity,
         storeMarketTableView);
+
+    handleLoadPurchases(storePurchasesTableView);
 
     storeMarketPurchaseButton.setOnAction(
         actionEvent ->
@@ -108,7 +113,8 @@ public class StoreController {
                 storeMarketSearchField,
                 storeMarketSliderMaxPrice,
                 storeMarketSliderMinQuantity,
-                storeMarketTableView));
+                storeMarketTableView,
+                storePurchasesTableView));
 
     storeMarketSearchButton.setOnAction(
         actionEvent ->
@@ -127,6 +133,9 @@ public class StoreController {
                 storeMarketMaxPriceLabel,
                 storeMarketMinQuantityLabel,
                 storeMarketTableView));
+
+    storePurchasesReloadButton.setOnAction(
+        actionEvent -> reloadButtonCLicked(storePurchasesTableView));
   }
 
   private void setMarketTableColumns() {
@@ -138,6 +147,20 @@ public class StoreController {
 
     storeMarketQuantityColumn.setCellValueFactory(
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantity()));
+  }
+
+  private void setPurchasesTableColumns() {
+    storePurchasesNameColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
+
+    storePurchasesPriceColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getTotalCost()));
+
+    storePurchasesQuantityColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantityPurchased()));
+
+    storePurchasesDateColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPurchaseDate()));
   }
 
   private void handleLoadProducts(
@@ -164,7 +187,8 @@ public class StoreController {
       TextField storeMarketSearchField,
       Slider storeMarketSliderMaxPrice,
       Slider storeMarketSliderMinQuantity,
-      TableView<Product> storeMarketTableView) {
+      TableView<Product> storeMarketTableView,
+      TableView<TablePurchase> storePurchasesTableView) {
 
     UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
     ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
@@ -200,6 +224,8 @@ public class StoreController {
           storeMarketSliderMaxPrice,
           storeMarketSliderMinQuantity,
           storeMarketTableView);
+
+      handleLoadPurchases(storePurchasesTableView);
     } catch (ExcessiveQuantityException e) {
       PopupDialogs.showErrorDialog(
           "Error",
@@ -302,5 +328,25 @@ public class StoreController {
       e.printStackTrace();
       return 500.0;
     }
+  }
+
+  private void handleLoadPurchases(TableView<TablePurchase> storePurchasesTableView) {
+    UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+    String userCode = userDataSingleton.getIdCode();
+
+    try {
+      storePurchasesTableView.setItems(TablePurchaseLoader.loadPurchases(userCode));
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private void reloadButtonCLicked(TableView<TablePurchase> storePurchasesTableView) {
+    handleLoadPurchases(storePurchasesTableView);
+
+    PopupDialogs.showInformationDialog(
+        "Success", "Purchases Reloaded", "The list of purchases has been successfully reloaded.");
   }
 }
