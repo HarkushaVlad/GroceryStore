@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="refactor JDBC Operations with Try-With-Resources">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/ProductLoader.java" afterDir="false" />
+    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="implement filtered product search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LoadProducts.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/style/tabStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/style/tabStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/MakePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/MakePurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/exceptions/ZeroQuantityException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +120,7 @@
       <workItem from="1710080709143" duration="382000" />
       <workItem from="1710151277928" duration="19766000" />
       <workItem from="1710174333734" duration="7926000" />
-      <workItem from="1710227594819" duration="13265000" />
+      <workItem from="1710227594819" duration="14293000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
@@ -156,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710180173714</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implement filtered product search">
+      <option name="closed" value="true" />
+      <created>1710243735366</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710243735366</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +183,7 @@
     <MESSAGE value="create log in page" />
     <MESSAGE value="implemented purchase functionality" />
     <MESSAGE value="refactor JDBC Operations with Try-With-Resources" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor JDBC Operations with Try-With-Resources" />
+    <MESSAGE value="implement filtered product search" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement filtered product search" />
   </component>
 </project>

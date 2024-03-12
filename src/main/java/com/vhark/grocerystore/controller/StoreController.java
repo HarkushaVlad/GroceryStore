@@ -10,7 +10,6 @@ import com.vhark.grocerystore.model.ProductLoader;
 import com.vhark.grocerystore.model.MakePurchase;
 import com.vhark.grocerystore.model.Product;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
-import com.vhark.grocerystore.model.exceptions.ZeroQuantityException;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PopupDialogs;
@@ -154,7 +153,7 @@ public class StoreController {
       return;
     }
 
-    if (numberOfItems.isEmpty()) {
+    if (numberOfItems.isEmpty() || numberOfItems.startsWith("0")) {
       PopupDialogs.showErrorDialog(
           "Error", "Quantity Not Entered", "Please enter the quantity before proceeding.");
       return;
@@ -171,9 +170,6 @@ public class StoreController {
       PopupDialogs.showInformationDialog(
           "Success", "Purchase Completed", "Your purchase was successfully completed.");
       storeMarketNumberOfItemsField.clear();
-    } catch (ZeroQuantityException e) {
-      PopupDialogs.showErrorDialog(
-          "Error", "Zero Quantity", "Quantity should be greater than zero.");
     } catch (ExcessiveQuantityException e) {
       PopupDialogs.showErrorDialog(
           "Error",

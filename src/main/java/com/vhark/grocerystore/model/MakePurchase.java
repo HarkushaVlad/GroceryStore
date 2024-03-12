@@ -4,7 +4,7 @@ import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
 import com.vhark.grocerystore.model.exceptions.UserIdNotFoundException;
-import com.vhark.grocerystore.model.exceptions.ZeroQuantityException;
+import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -24,10 +24,6 @@ public final class MakePurchase {
   }
 
   public void addPurchaseToDb() throws SQLException {
-    if (QUANTITY == 0) {
-      throw new ZeroQuantityException("Quantity should be greater than zero");
-    }
-
     String sqlInsertPurchase =
         "INSERT INTO purchases(user_id, product_id, quantity_purchased, purchase_date) VALUES(?, ?, ?, ?)";
 
@@ -36,8 +32,6 @@ public final class MakePurchase {
                 DbUsers.CLIENT.getLoginName(), DbUsers.CLIENT.getPassword());
         PreparedStatement insertPurchaseStatement =
             connection.prepareStatement(sqlInsertPurchase); ) {
-
-      updateQuantity(connection);
 
       insertPurchaseStatement.setInt(1, getUserIdByCode(connection, USER_ID_CODE));
       insertPurchaseStatement.setString(2, PRODUCT_ID);
@@ -48,6 +42,8 @@ public final class MakePurchase {
       insertPurchaseStatement.setDate(4, Date.valueOf(formattedDate));
 
       insertPurchaseStatement.execute();
+
+      updateQuantity(connection);
     }
   }
 
