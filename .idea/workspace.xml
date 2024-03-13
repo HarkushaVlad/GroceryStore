@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="implement purchases loading">
+    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="add quit method">
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/SignUpController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/LogInUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/dao/LogInUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/MakePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/dao/MakePurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/entities/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/ProductLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/dao/ProductLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/Purchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/entities/Purchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/SignUpNewUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/dao/SignUpNewUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/TablePurchase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/entities/TablePurchase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/TablePurchaseLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/dao/TablePurchaseLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/model/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +130,7 @@
       <workItem from="1710080709143" duration="382000" />
       <workItem from="1710151277928" duration="19766000" />
       <workItem from="1710174333734" duration="7926000" />
-      <workItem from="1710227594819" duration="25076000" />
+      <workItem from="1710227594819" duration="25639000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
@@ -192,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710255492378</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add quit method">
+      <option name="closed" value="true" />
+      <created>1710255591702</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710255591702</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,6 +238,7 @@
     <MESSAGE value="refactor products loading" />
     <MESSAGE value="refactor getUserIdByCode method" />
     <MESSAGE value="implement purchases loading" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement purchases loading" />
+    <MESSAGE value="add quit method" />
+    <option name="LAST_COMMIT_MESSAGE" value="add quit method" />
   </component>
 </project>

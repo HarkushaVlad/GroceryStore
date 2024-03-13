@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
-import com.vhark.grocerystore.model.LogInUser;
+import com.vhark.grocerystore.model.dao.LogInUser;
 import com.vhark.grocerystore.model.exceptions.FailedLogInException;
 import com.vhark.grocerystore.util.PopupDialogs;
 import com.vhark.grocerystore.util.WindowSwitcher;

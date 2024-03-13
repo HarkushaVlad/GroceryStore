@@ -1,4 +1,4 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.entities;
 
 import java.math.BigDecimal;
 

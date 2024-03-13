@@ -1,4 +1,4 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.entities;
 
 import com.vhark.grocerystore.model.exceptions.UserIdNotFoundException;
 

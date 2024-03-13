@@ -4,7 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.vhark.grocerystore.model.SignUpNewUser;
+import com.vhark.grocerystore.model.dao.SignUpNewUser;
 import com.vhark.grocerystore.model.exceptions.UserExistsException;
 import com.vhark.grocerystore.util.PopupDialogs;
 import com.vhark.grocerystore.util.WindowSwitcher;

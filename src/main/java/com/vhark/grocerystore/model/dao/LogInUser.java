@@ -1,4 +1,4 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.dao;
 
 import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;

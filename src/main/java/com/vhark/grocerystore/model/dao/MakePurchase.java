@@ -1,10 +1,9 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.dao;
 
 import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;
+import com.vhark.grocerystore.model.entities.User;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
-import com.vhark.grocerystore.model.exceptions.UserIdNotFoundException;
-import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 
 import java.sql.*;
 import java.time.LocalDate;

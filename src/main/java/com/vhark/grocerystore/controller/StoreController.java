@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-import com.vhark.grocerystore.model.*;
+import com.vhark.grocerystore.model.dao.MakePurchase;
+import com.vhark.grocerystore.model.dao.ProductLoader;
+import com.vhark.grocerystore.model.dao.TablePurchaseLoader;
+import com.vhark.grocerystore.model.entities.Product;
+import com.vhark.grocerystore.model.entities.TablePurchase;
 import com.vhark.grocerystore.model.exceptions.ExcessiveQuantityException;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;

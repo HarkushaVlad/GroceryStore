@@ -1,7 +1,8 @@
-package com.vhark.grocerystore.model;
+package com.vhark.grocerystore.model.dao;
 
 import com.vhark.grocerystore.database.DatabaseHandler;
 import com.vhark.grocerystore.database.constants.DbUsers;
+import com.vhark.grocerystore.model.entities.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
