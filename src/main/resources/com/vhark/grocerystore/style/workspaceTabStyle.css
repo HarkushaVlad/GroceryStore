@@ -1,0 +1,30 @@
+.tab-pane:focused .tab {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab-header-background {
+    -fx-background-color: #f9bc60;
+}
+
+.tab {
+    -fx-background-color: #d09b45;
+    -fx-cursor: hand;
+}
+
+.tab:hover {
+    -fx-background-color: #d99e5e;
+}
+
+.tab:selected {
+    -fx-background-color: #e5a964;
+    -fx-border-color: transparent;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #fffffe;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #fffffe;
+}

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" style="-fx-background-color: #004643;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vhark.grocerystore.controller.EmployeeWorkspaceController">
+    <TabPane prefHeight="550.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab fx:id="workspaceProductsTabButton" text="Products">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <VBox prefHeight="528.0" prefWidth="192.0" style="-fx-background-color: #006b67;">
+                                <children>
+                                    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product name" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" top="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="workspaceProductsSearchField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </VBox.margin>
+                                        <cursor>
+                                            <Cursor fx:constant="TEXT" />
+                                        </cursor>
+                                    </TextField>
+                                    <Separator prefWidth="200.0" style="-fx-background-color: #b8c1ec;">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" top="7.0" />
+                                        </VBox.margin>
+                                    </Separator>
+                                    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="207.0" text="Max price" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="workspaceProductsMaxPriceLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="203.0" text="No limit" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <Slider fx:id="workspaceProductsSliderMaxPrice" blockIncrement="1.0" prefHeight="14.0" prefWidth="199.0" style="-fx-background-color: #e69129; -fx-background-radius: 10;">
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </VBox.margin>
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                    </Slider>
+                                    <Separator prefWidth="200.0" style="-fx-background-color: #b8c1ec;">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" top="7.0" />
+                                        </VBox.margin>
+                                    </Separator>
+                                    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="207.0" text="Min quantity" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="workspaceProductsMinQuantityLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="203.0" text="No limit" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <Slider fx:id="workspaceProductsSliderMinQuantity" blockIncrement="1.0" prefHeight="14.0" prefWidth="199.0" style="-fx-background-color: #e69129; -fx-background-radius: 10;">
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </VBox.margin>
+                                    </Slider>
+                                    <Separator prefWidth="200.0" style="-fx-background-color: #b8c1ec;">
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" top="7.0" />
+                                        </VBox.margin>
+                                    </Separator>
+                                    <Button fx:id="workspaceProductsSearchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #f9bc60; -fx-background-radius: 5; -fx-background-insets: 0;" text="Search" textFill="#001e1d">
+                                        <VBox.margin>
+                                            <Insets bottom="10.0" left="5.0" right="5.0" />
+                                        </VBox.margin>
+                                        <font>
+                                            <Font name="Arial Black" size="12.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                    </Button>
+                                    <Button fx:id="workspaceProductsResetButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #e69129; -fx-background-radius: 5; -fx-background-insets: 0;" text="Reset" textFill="#001e1d">
+                                        <font>
+                                            <Font name="Arial Black" size="12.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </VBox.margin>
+                                    </Button>
+                                </children>
+                            </VBox>
+                            <TableView fx:id="workspaceProductsTableView" layoutX="192.0" onMouseClicked="#selectItem" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #004643; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
+                                <columns>
+                                    <TableColumn fx:id="workspaceProductsNameColumn" maxWidth="316.0" minWidth="316.0" prefWidth="316.0" style="-fx-background-color: #008a85;" text="Name" />
+                                    <TableColumn fx:id="workspaceProductsPriceColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: #00807b;" text="Price" />
+                                    <TableColumn fx:id="workspaceProductsQuantityColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: #008a85;" text="Quantity" />
+                                </columns>
+                                <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                </cursor>
+                            </TableView>
+                            <VBox layoutX="708.0" prefHeight="525.0" prefWidth="192.0" style="-fx-background-color: #006b67;">
+                                <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="242.0" text="Edit selected product" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="5.0" top="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product name:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="5.0" />
+                              </VBox.margin>
+                           </Label>
+                                    <Label fx:id="workspaceProductsEditSelectedProductNameLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="177.0" text="No product selected" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial Black" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="4.0" left="5.0" right="10.0" />
+                                        </VBox.margin>
+                                    </Label>
+                           <TextField fx:id="workspaceProductsEditProductNameField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                           <Label fx:id="workspaceProductsEditProductPriceLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product price: " textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <TextField fx:id="workspaceProductsEditProductPriceField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                           <Label fx:id="workspaceProductsEditProductQuantityLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product quantity: " textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <TextField fx:id="workspaceProductsEditProductQuantityField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                                    <Button fx:id="workspaceProductsSaveEditButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #f9bc60; -fx-background-radius: 5; -fx-background-insets: 0;" text="Save Edit" textFill="#001e1d">
+                                        <font>
+                                            <Font name="Arial Black" size="12.0" />
+                                        </font>
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" top="10.0" />
+                                        </VBox.margin>
+                                    </Button>
+                           <Separator prefWidth="200.0" style="-fx-background-color: #b8c1ec;">
+                              <VBox.margin>
+                                 <Insets top="7.0" />
+                              </VBox.margin>
+                           </Separator>
+                           <Label alignment="CENTER" prefHeight="17.0" prefWidth="242.0" text="Add new product" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product name:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="5.0" />
+                              </VBox.margin>
+                           </Label>
+                           <TextField fx:id="workspaceProductsAddProductNameField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product price:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <TextField fx:id="workspaceProductsAddProductPriceField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Product quantity:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="10.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <TextField fx:id="workspaceProductsAddProductQuantityField" style="-fx-border-radius: 5; -fx-border-color: #b8c1ec; -fx-background-color: transparent; -fx-text-fill: #fffffe;">
+                              <cursor>
+                                 <Cursor fx:constant="TEXT" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </TextField>
+                           <Button fx:id="workspaceProductsAddProductButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #e69129; -fx-background-radius: 5; -fx-background-insets: 0;" text="Add product" textFill="#001e1d">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Button>
+                                </children>
+                            </VBox>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+            <Tab fx:id="workspaceClientsTabButton" text="Clients">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <VBox prefHeight="528.0" prefWidth="192.0" style="-fx-background-color: #006b67;">
+                                <children>
+                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="242.0" text="Choose client ID code" textAlignment="CENTER" textFill="#fffffe">
+                                        <font>
+                                            <Font name="Arial" size="12.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets left="5.0" right="5.0" top="15.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <Separator prefWidth="200.0" style="-fx-background-color: #b8c1ec;">
+                                        <VBox.margin>
+                                            <Insets top="7.0" />
+                                        </VBox.margin>
+                                    </Separator>
+                           <Label fx:id="workspaceClientIdCodeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="242.0" text="No client selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="First name:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="3.0" left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label fx:id="workspaceClientFirstNameLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No client selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Last name:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="3.0" left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label fx:id="workspaceClientLastNameLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No client selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Middle name:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="3.0" left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label fx:id="workspaceClientMiddleNameLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No client selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="Address:" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="3.0" left="5.0" right="5.0" top="10.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Label fx:id="workspaceClientAddressLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="242.0" text="No client selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Button fx:id="workspaceDeleteClientButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #b5001b; -fx-background-radius: 5; -fx-background-insets: 0;" text="Delete client" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" top="220.0" />
+                              </VBox.margin>
+                           </Button>
+                                </children>
+                            </VBox>
+                            <TableView fx:id="workspaceClientPurchasesTableView" layoutX="390.0" prefHeight="526.0" prefWidth="518.0" style="-fx-background-color: #004643; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
+                                <columns>
+                                    <TableColumn fx:id="workspaceClientPurchasesNameColumn" maxWidth="238.0" minWidth="238.0" prefWidth="238.0" style="-fx-background-color: #008a85;" text="Name" />
+                                    <TableColumn fx:id="workspaceClientPurchasesPriceColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-background-color: #00807b;" text="Total cost" />
+                                    <TableColumn fx:id="workspaceClientPurchasesQuantityColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-background-color: #008a85;" text="Quantity" />
+                                    <TableColumn fx:id="workspaceClientPurchasesDateColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-background-color: #00807b;" text="Date" />
+                                </columns>
+                            </TableView>
+                     <TableView fx:id="workspaceClientsTableView" layoutX="192.0" prefHeight="526.0" prefWidth="200.0" style="-fx-background-color: #005e5b; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
+                        <columns>
+                           <TableColumn fx:id="workspaceClientIdCodeColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" style="-fx-background-color: #008a85;" text="Client ID code" />
+                        </columns>
+                     </TableView>
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+            <Tab fx:id="workspaceSettingsTabButton" text="Settings">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <Button fx:id="workspaceSettingsQuitButton" layoutX="764.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" style="-fx-background-color: #f9bc60; -fx-background-radius: 5; -fx-background-insets: 0;" text="QUIT" textFill="#232946">
+                                <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                </font>
+                                <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                </cursor>
+                            </Button>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+      <stylesheets>
+         <URL value="@../style/workspaceTabStyle.css" />
+      </stylesheets>
+    </TabPane>
+</AnchorPane>

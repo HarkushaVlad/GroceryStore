@@ -51,7 +51,7 @@ public class LogInController {
         UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
 
         if (userDataSingleton.getIsEmployee()) {
-          // employee scene
+          WindowSwitcher.switchWindow(logInButton, "view/employeeWorkspace.fxml", "Workspace");
         } else {
           WindowSwitcher.switchWindow(logInButton, "view/store.fxml", "Grocery Store");
         }
