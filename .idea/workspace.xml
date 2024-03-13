@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="refactor directory layout">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/EmployeeWorkspaceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/style/workspaceTabStyle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/employeeWorkspace.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/LogInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/style/tabStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/style/marketTabStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/vhark/grocerystore/view/store.fxml" afterDir="false" />
+    <list default="true" id="160c9411-ab2f-4634-ab41-11cfd4675a86" name="Changes" comment="add employee workspace scene">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vhark/grocerystore/controller/StoreController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +119,7 @@
       <workItem from="1710174333734" duration="7926000" />
       <workItem from="1710227594819" duration="25639000" />
       <workItem from="1710318018940" duration="4332000" />
-      <workItem from="1710344103039" duration="351000" />
+      <workItem from="1710344103039" duration="656000" />
     </task>
     <task id="LOCAL-00001" summary="create log in page">
       <option name="closed" value="true" />
@@ -215,7 +209,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710318244586</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="change stylesheet naming">
+      <option name="closed" value="true" />
+      <created>1710344470159</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710344470159</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add employee workspace scene">
+      <option name="closed" value="true" />
+      <created>1710344504443</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710344504443</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +253,8 @@
     <MESSAGE value="implement purchases loading" />
     <MESSAGE value="add quit method" />
     <MESSAGE value="refactor directory layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor directory layout" />
+    <MESSAGE value="change stylesheet naming" />
+    <MESSAGE value="add employee workspace scene" />
+    <option name="LAST_COMMIT_MESSAGE" value="add employee workspace scene" />
   </component>
 </project>

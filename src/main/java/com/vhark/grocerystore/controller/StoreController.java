@@ -252,17 +252,17 @@ public class StoreController {
       Label storeMarketMinQuantityLabel,
       TableView<Product> storeMarketTableView) {
 
-    handleLoadProducts(
-        storeMarketSearchField,
-        storeMarketSliderMaxPrice,
-        storeMarketSliderMinQuantity,
-        storeMarketTableView);
-
     storeMarketSearchField.clear();
     storeMarketSliderMaxPrice.setValue(getMaxPrice());
     storeMarketSliderMinQuantity.setValue(0.0);
     storeMarketMaxPriceLabel.setText("No limit");
     storeMarketMinQuantityLabel.setText("No limit");
+
+    handleLoadProducts(
+            storeMarketSearchField,
+            storeMarketSliderMaxPrice,
+            storeMarketSliderMinQuantity,
+            storeMarketTableView);
   }
 
   private void numbersOfItemsFieldInit(TextField storeMarketNumberOfItemsField) {
