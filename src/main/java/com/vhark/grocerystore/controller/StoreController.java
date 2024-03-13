@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import com.vhark.grocerystore.model.dao.MakePurchase;
-import com.vhark.grocerystore.model.dao.ProductLoader;
 import com.vhark.grocerystore.model.dao.TablePurchaseLoader;
 import com.vhark.grocerystore.model.entities.Product;
 import com.vhark.grocerystore.model.entities.TablePurchase;
@@ -95,106 +93,78 @@ public class StoreController {
 
   @FXML
   void initialize() {
-    maxPriceSliderInit(storeMarketSliderMaxPrice, storeMarketMaxPriceLabel);
-    minQuantitySliderInit(storeMarketSliderMinQuantity, storeMarketMinQuantityLabel);
+    ProductSearchControllerUtil.maxProductPriceSliderInit(
+            storeMarketSliderMaxPrice, storeMarketMaxPriceLabel);
+    ProductSearchControllerUtil.minProductQuantitySliderInit(
+            storeMarketSliderMinQuantity, storeMarketMinQuantityLabel);
     numbersOfItemsFieldInit(storeMarketNumberOfItemsField);
 
-    setMarketTableColumns();
+    ProductSearchControllerUtil.setProductTableColumns(
+            storeMarketNameColumn, storeMarketPriceColumn, storeMarketQuantityColumn);
     setPurchasesTableColumns();
 
-    handleLoadProducts(
-        storeMarketSearchField,
-        storeMarketSliderMaxPrice,
-        storeMarketSliderMinQuantity,
-        storeMarketTableView);
-
+    ProductSearchControllerUtil.loadProducts(
+            storeMarketSearchField,
+            storeMarketSliderMaxPrice,
+            storeMarketSliderMinQuantity,
+            storeMarketTableView);
     handleLoadPurchases(storePurchasesTableView);
 
-    storeMarketPurchaseButton.setOnAction(
-        actionEvent ->
-            purchaseButtonClicked(
-                storeMarketNumberOfItemsField,
-                storeMarketSearchField,
-                storeMarketSliderMaxPrice,
-                storeMarketSliderMinQuantity,
-                storeMarketTableView,
-                storePurchasesTableView));
-
     storeMarketSearchButton.setOnAction(
-        actionEvent ->
-            handleLoadProducts(
-                storeMarketSearchField,
-                storeMarketSliderMaxPrice,
-                storeMarketSliderMinQuantity,
-                storeMarketTableView));
+            actionEvent ->
+                    ProductSearchControllerUtil.loadProducts(
+                            storeMarketSearchField,
+                            storeMarketSliderMaxPrice,
+                            storeMarketSliderMinQuantity,
+                            storeMarketTableView));
 
     storeMarketResetButton.setOnAction(
-        actionEvent ->
-            resetButtonClicked(
-                storeMarketSearchField,
-                storeMarketSliderMaxPrice,
-                storeMarketSliderMinQuantity,
-                storeMarketMaxPriceLabel,
-                storeMarketMinQuantityLabel,
-                storeMarketTableView));
+            actionEvent ->
+                    ProductSearchControllerUtil.resetProductFilter(
+                            storeMarketSearchField,
+                            storeMarketSliderMaxPrice,
+                            storeMarketSliderMinQuantity,
+                            storeMarketMaxPriceLabel,
+                            storeMarketMinQuantityLabel,
+                            storeMarketTableView));
+
+    storeMarketPurchaseButton.setOnAction(
+            actionEvent ->
+                    purchaseButtonClicked(
+                            storeMarketNumberOfItemsField,
+                            storeMarketSearchField,
+                            storeMarketSliderMaxPrice,
+                            storeMarketSliderMinQuantity,
+                            storeMarketTableView,
+                            storePurchasesTableView));
 
     storePurchasesReloadButton.setOnAction(
-        actionEvent -> reloadButtonCLicked(storePurchasesTableView));
+            actionEvent -> reloadButtonCLicked(storePurchasesTableView));
 
     storeSettingsQuitButton.setOnAction(actionEvent -> quitButtonClicked(storeSettingsQuitButton));
   }
 
-  private void setMarketTableColumns() {
-    storeMarketNameColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
-
-    storeMarketPriceColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPrice()));
-
-    storeMarketQuantityColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantity()));
-  }
-
   private void setPurchasesTableColumns() {
     storePurchasesNameColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
+            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
 
     storePurchasesPriceColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getTotalCost()));
+            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getTotalCost()));
 
     storePurchasesQuantityColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantityPurchased()));
+            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantityPurchased()));
 
     storePurchasesDateColumn.setCellValueFactory(
-        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPurchaseDate()));
-  }
-
-  private void handleLoadProducts(
-      TextField storeMarketSearchField,
-      Slider storeMarketSliderMaxPrice,
-      Slider storeMarketSliderMinQuantity,
-      TableView<Product> storeMarketTableView) {
-
-    String productName = storeMarketSearchField.getText();
-    double maxPrice = storeMarketSliderMaxPrice.getValue();
-    double minQuantity = storeMarketSliderMinQuantity.getValue();
-
-    try {
-      storeMarketTableView.setItems(ProductLoader.loadProducts(productName, maxPrice, minQuantity));
-    } catch (SQLException e) {
-      e.printStackTrace();
-      PopupDialogs.showErrorDialog(
-          "Error", "Something went wrong", "Something went wrong, try again later.");
-    }
+            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPurchaseDate()));
   }
 
   private void purchaseButtonClicked(
-      TextField storeMarketNumberOfItemsField,
-      TextField storeMarketSearchField,
-      Slider storeMarketSliderMaxPrice,
-      Slider storeMarketSliderMinQuantity,
-      TableView<Product> storeMarketTableView,
-      TableView<TablePurchase> storePurchasesTableView) {
+          TextField storeMarketNumberOfItemsField,
+          TextField storeMarketSearchField,
+          Slider storeMarketSliderMaxPrice,
+          Slider storeMarketSliderMinQuantity,
+          TableView<Product> storeMarketTableView,
+          TableView<TablePurchase> storePurchasesTableView) {
 
     UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
     ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
@@ -202,138 +172,57 @@ public class StoreController {
 
     if (productDataSingleton.getProductId() == null) {
       PopupDialogs.showErrorDialog(
-          "Error", "No Product Selected", "Please select a product before proceeding.");
+              "Error", "No Product Selected", "Please select a product before proceeding.");
       return;
     }
 
     if (numberOfItems.isEmpty() || numberOfItems.startsWith("0")) {
       PopupDialogs.showErrorDialog(
-          "Error", "Quantity Not Entered", "Please enter the quantity before proceeding.");
+              "Error", "Quantity Not Entered", "Please enter the quantity before proceeding.");
       return;
     }
 
     int quantity = Integer.parseInt(numberOfItems);
 
     MakePurchase makePurchase =
-        new MakePurchase(
-            userDataSingleton.getIdCode(), productDataSingleton.getProductId(), quantity);
+            new MakePurchase(
+                    userDataSingleton.getIdCode(), productDataSingleton.getProductId(), quantity);
 
     try {
       makePurchase.addPurchaseToDb();
 
       PopupDialogs.showInformationDialog(
-          "Success", "Purchase Completed", "Your purchase was successfully completed.");
+              "Success", "Purchase Completed", "Your purchase was successfully completed.");
       storeMarketNumberOfItemsField.clear();
 
-      handleLoadProducts(
-          storeMarketSearchField,
-          storeMarketSliderMaxPrice,
-          storeMarketSliderMinQuantity,
-          storeMarketTableView);
+      ProductSearchControllerUtil.loadProducts(
+              storeMarketSearchField,
+              storeMarketSliderMaxPrice,
+              storeMarketSliderMinQuantity,
+              storeMarketTableView);
 
       handleLoadPurchases(storePurchasesTableView);
     } catch (ExcessiveQuantityException e) {
       PopupDialogs.showErrorDialog(
-          "Error",
-          "Excessive Quantity",
-          "The quantity of selected products exceeds the available stock");
+              "Error",
+              "Excessive Quantity",
+              "The quantity of selected products exceeds the available stock");
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
-          "Error", "Something went wrong", "Something went wrong, try again later.");
+              "Error", "Something went wrong", "Something went wrong, try again later.");
     }
-  }
-
-  private void resetButtonClicked(
-      TextField storeMarketSearchField,
-      Slider storeMarketSliderMaxPrice,
-      Slider storeMarketSliderMinQuantity,
-      Label storeMarketMaxPriceLabel,
-      Label storeMarketMinQuantityLabel,
-      TableView<Product> storeMarketTableView) {
-
-    storeMarketSearchField.clear();
-    storeMarketSliderMaxPrice.setValue(getMaxPrice());
-    storeMarketSliderMinQuantity.setValue(0.0);
-    storeMarketMaxPriceLabel.setText("No limit");
-    storeMarketMinQuantityLabel.setText("No limit");
-
-    handleLoadProducts(
-            storeMarketSearchField,
-            storeMarketSliderMaxPrice,
-            storeMarketSliderMinQuantity,
-            storeMarketTableView);
   }
 
   private void numbersOfItemsFieldInit(TextField storeMarketNumberOfItemsField) {
     storeMarketNumberOfItemsField
-        .textProperty()
-        .addListener(
-            (observable, oldValue, newValue) -> {
-              if (!newValue.matches("\\d*")) {
-                storeMarketNumberOfItemsField.setText(newValue.replaceAll("\\D", ""));
-              }
-            });
-  }
-
-  private void maxPriceSliderInit(
-      Slider storeMarketSliderMaxPrice, Label storeMarketMaxPriceLabel) {
-    double dbMaxPrice = getMaxPrice();
-
-    storeMarketSliderMaxPrice.setMin(0.0);
-    storeMarketSliderMaxPrice.setMax(dbMaxPrice);
-    storeMarketSliderMaxPrice.setValue(dbMaxPrice);
-    storeMarketSliderMaxPrice.setShowTickLabels(true);
-    storeMarketSliderMaxPrice.setMajorTickUnit(1.0);
-    storeMarketSliderMaxPrice.setMinorTickCount(1);
-    storeMarketSliderMaxPrice.setBlockIncrement(0.05);
-
-    storeMarketSliderMaxPrice
-        .valueProperty()
-        .addListener(
-            ((observable, oldValue, newValue) -> {
-              Double maxPriceValue = storeMarketSliderMaxPrice.getValue();
-              storeMarketMaxPriceLabel.setText(new DecimalFormat("##.##").format(maxPriceValue));
-            }));
-  }
-
-  private void minQuantitySliderInit(
-      Slider storeMarketSliderMinQuantity, Label storeMarketMinQuantityLabel) {
-    double maxQuantity = getMaxQuantity();
-
-    storeMarketSliderMinQuantity.setMin(0.0);
-    storeMarketSliderMinQuantity.setMax(maxQuantity);
-    storeMarketSliderMinQuantity.setValue(0.0);
-    storeMarketSliderMinQuantity.setShowTickLabels(true);
-    storeMarketSliderMinQuantity.setMajorTickUnit(5.0);
-    storeMarketSliderMinQuantity.setMinorTickCount(10);
-    storeMarketSliderMinQuantity.setBlockIncrement(1.0);
-
-    storeMarketSliderMinQuantity
-        .valueProperty()
-        .addListener(
-            ((observable, oldValue, newValue) -> {
-              Double minQuantityValue = storeMarketSliderMinQuantity.getValue();
-              storeMarketMinQuantityLabel.setText(new DecimalFormat("#").format(minQuantityValue));
-            }));
-  }
-
-  private double getMaxPrice() {
-    try {
-      return ProductLoader.getMaxPrice();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return 100.0;
-    }
-  }
-
-  private double getMaxQuantity() {
-    try {
-      return ProductLoader.getMaxQuantity();
-    } catch (SQLException e) {
-      e.printStackTrace();
-      return 500.0;
-    }
+            .textProperty()
+            .addListener(
+                    (observable, oldValue, newValue) -> {
+                      if (!newValue.matches("\\d*")) {
+                        storeMarketNumberOfItemsField.setText(newValue.replaceAll("\\D", ""));
+                      }
+                    });
   }
 
   private void handleLoadPurchases(TableView<TablePurchase> storePurchasesTableView) {
@@ -345,7 +234,7 @@ public class StoreController {
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
-          "Error", "Something went wrong", "Something went wrong, try again later.");
+              "Error", "Something went wrong", "Something went wrong, try again later.");
     }
   }
 
@@ -353,7 +242,7 @@ public class StoreController {
     handleLoadPurchases(storePurchasesTableView);
 
     PopupDialogs.showInformationDialog(
-        "Success", "Purchases Reloaded", "The list of purchases has been successfully reloaded.");
+            "Success", "Purchases Reloaded", "The list of purchases has been successfully reloaded.");
   }
 
   private void quitButtonClicked(Button storeSettingsQuitButton) {
@@ -365,6 +254,7 @@ public class StoreController {
 
     productDataSingleton.setProductId(null);
 
-    WindowSwitcher.switchWindow(storeSettingsQuitButton, "view/LogInPage.fxml", "Grocery Store Log In");
+    WindowSwitcher.switchWindow(
+            storeSettingsQuitButton, "view/LogInPage.fxml", "Grocery Store Log In");
   }
 }
