@@ -1,7 +1,13 @@
 package com.vhark.grocerystore.controller;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.vhark.grocerystore.model.entities.Product;
+import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
+import com.vhark.grocerystore.model.singletons.UserDataSingleton;
+import com.vhark.grocerystore.util.WindowSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,11 +76,11 @@ public class EmployeeWorkspaceController {
 
   @FXML private Label workspaceProductsMinQuantityLabel;
 
-  @FXML private TableColumn<?, ?> workspaceProductsNameColumn;
+  @FXML private TableColumn<Product, String> workspaceProductsNameColumn;
 
-  @FXML private TableColumn<?, ?> workspaceProductsPriceColumn;
+  @FXML private TableColumn<Product, BigDecimal> workspaceProductsPriceColumn;
 
-  @FXML private TableColumn<?, ?> workspaceProductsQuantityColumn;
+  @FXML private TableColumn<Product, Integer> workspaceProductsQuantityColumn;
 
   @FXML private Button workspaceProductsResetButton;
 
@@ -90,15 +96,72 @@ public class EmployeeWorkspaceController {
 
   @FXML private Tab workspaceProductsTabButton;
 
-  @FXML private TableView<?> workspaceProductsTableView;
+  @FXML private TableView<Product> workspaceProductsTableView;
 
   @FXML private Button workspaceSettingsQuitButton;
 
   @FXML private Tab workspaceSettingsTabButton;
 
   @FXML
-  void selectItem(MouseEvent event) {}
+  void selectItem(MouseEvent event) {
+    Product product = workspaceProductsTableView.getSelectionModel().getSelectedItem();
+
+    if (product != null) {
+      ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+      productDataSingleton.setProductId(product.getProductId());
+      workspaceProductsEditSelectedProductNameLabel.setText(
+          "Selected: " + product.getProductName());
+    }
+  }
 
   @FXML
-  void initialize() {}
+  void initialize() {
+    ProductSearchControllerUtil.maxProductPriceSliderInit(
+        workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
+    ProductSearchControllerUtil.minProductQuantitySliderInit(
+        workspaceProductsSliderMinQuantity, workspaceProductsMinQuantityLabel);
+
+    ProductSearchControllerUtil.setProductTableColumns(
+        workspaceProductsNameColumn, workspaceProductsPriceColumn, workspaceProductsQuantityColumn);
+
+    ProductSearchControllerUtil.loadProducts(
+        workspaceProductsSearchField,
+        workspaceProductsSliderMaxPrice,
+        workspaceProductsSliderMinQuantity,
+        workspaceProductsTableView);
+
+    workspaceProductsSearchButton.setOnAction(
+        actionEvent ->
+            ProductSearchControllerUtil.loadProducts(
+                workspaceProductsSearchField,
+                workspaceProductsSliderMaxPrice,
+                workspaceProductsSliderMinQuantity,
+                workspaceProductsTableView));
+
+    workspaceProductsResetButton.setOnAction(
+        actionEvent ->
+            ProductSearchControllerUtil.resetProductFilter(
+                workspaceProductsSearchField,
+                workspaceProductsSliderMaxPrice,
+                workspaceProductsSliderMinQuantity,
+                workspaceProductsMaxPriceLabel,
+                workspaceProductsMinQuantityLabel,
+                workspaceProductsTableView));
+
+    workspaceSettingsQuitButton.setOnAction(
+        actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
+  }
+
+  private void quitButtonClicked(Button workspaceSettingsQuitButton) {
+    UserDataSingleton userDataSingleton = UserDataSingleton.getInstance();
+    ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
+
+    userDataSingleton.setIdCode(null);
+    userDataSingleton.setIsEmployee(false);
+
+    productDataSingleton.setProductId(null);
+
+    WindowSwitcher.switchWindow(
+        workspaceSettingsQuitButton, "view/LogInPage.fxml", "Grocery Store Log In");
+  }
 }
