@@ -119,21 +119,27 @@ public class EmployeeWorkspaceController {
     if (product != null) {
       ProductDataSingleton productDataSingleton = ProductDataSingleton.getInstance();
       productDataSingleton.setProductId(product.getProductId());
+
       workspaceProductsEditSelectedProductNameLabel.setText(
           "Selected: " + product.getProductName());
       workspaceProductsEditSelectedProductNameLabel1.setText(
           "Selected: " + product.getProductName());
+
       workspaceProductsEditProductPriceLabel.setText("Product price: " + product.getPrice());
       workspaceProductsEditProductQuantityLabel.setText(
           "Product quantity: " + product.getQuantity());
+
+      workspaceProductsEditProductNameField.setText(product.getProductName());
+      workspaceProductsEditProductPriceField.setText(product.getPrice() + "");
+      workspaceProductsEditProductQuantityField.setText(product.getQuantity() + "");
     }
   }
 
   private void slidersInit() {
     ProductSearchControllerUtil.maxProductPriceSliderInit(
-            workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
+        workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
     ProductSearchControllerUtil.minProductQuantitySliderInit(
-            workspaceProductsSliderMinQuantity, workspaceProductsMinQuantityLabel);
+        workspaceProductsSliderMinQuantity, workspaceProductsMinQuantityLabel);
   }
 
   @FXML
@@ -200,6 +206,7 @@ public class EmployeeWorkspaceController {
     try {
       ProductEditor.deleteProduct(productId);
 
+      slidersInit();
       productsSearchButton.fire();
 
       PopupDialogs.showInformationDialog(
