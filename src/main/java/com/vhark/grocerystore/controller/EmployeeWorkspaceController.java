@@ -2,11 +2,15 @@ package com.vhark.grocerystore.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.vhark.grocerystore.model.dao.ProductEditor;
 import com.vhark.grocerystore.model.entities.Product;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
+import com.vhark.grocerystore.util.PopupDialogs;
+import com.vhark.grocerystore.util.ProductDataValidator;
 import com.vhark.grocerystore.util.WindowSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
+import static java.lang.Integer.parseInt;
 
 public class EmployeeWorkspaceController {
 
@@ -111,6 +117,9 @@ public class EmployeeWorkspaceController {
       productDataSingleton.setProductId(product.getProductId());
       workspaceProductsEditSelectedProductNameLabel.setText(
           "Selected: " + product.getProductName());
+      workspaceProductsEditProductPriceLabel.setText("Product price: " + product.getPrice());
+      workspaceProductsEditProductQuantityLabel.setText(
+          "Product quantity: " + product.getQuantity());
     }
   }
 
@@ -148,8 +157,114 @@ public class EmployeeWorkspaceController {
                 workspaceProductsMinQuantityLabel,
                 workspaceProductsTableView));
 
+    workspaceProductsSaveEditButton.setOnAction(
+        actionEvent ->
+            saveEditButtonClicked(
+                workspaceProductsEditProductNameField,
+                workspaceProductsEditProductPriceField,
+                workspaceProductsEditProductQuantityField,
+                workspaceProductsSearchButton));
+
     workspaceSettingsQuitButton.setOnAction(
         actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
+  }
+
+  private void saveEditButtonClicked(
+      TextField productNameField,
+      TextField productPriceField,
+      TextField productQuantityField,
+      Button productsSearchButton) {
+    String productId = ProductDataSingleton.getInstance().getProductId();
+    String productName = productNameField.getText();
+    String productPrice = productPriceField.getText();
+    String productQuantity = productQuantityField.getText();
+
+    if (isInvalidProductDataInput(
+        productId, productNameField, productPriceField, productQuantityField)) {
+      return;
+    }
+
+    try {
+      ProductEditor.editProduct(productId, productName, productPrice, productQuantity);
+
+      productsSearchButton.fire();
+
+      PopupDialogs.showInformationDialog(
+          "Success",
+          "Product Update",
+          "Product data (" + productName + ") has been successfully updated");
+
+      clearProductDataInputFields(productNameField, productPriceField, productQuantityField);
+
+      removeErrorStyle(productNameField);
+      removeErrorStyle(productPriceField);
+      removeErrorStyle(productQuantityField);
+    } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog("Error", "Illegal arguments", "Invalid product data input");
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private boolean isInvalidProductDataInput(
+      String productId,
+      TextField productNameField,
+      TextField productPriceField,
+      TextField productQuantityField) {
+    String productName = productNameField.getText();
+    String productPrice = productPriceField.getText();
+    String productQuantity = productQuantityField.getText();
+
+    if (productId == null) {
+      PopupDialogs.showErrorDialog(
+          "Error", "No Product Selected", "Please select a product before proceeding.");
+      return true;
+    }
+
+    if (!ProductDataValidator.validateProductName(productName)) {
+      applyErrorStyle(productNameField);
+
+      PopupDialogs.showErrorDialog(
+          "Validation Error",
+          "Invalid Product Name",
+          "Product name should start with a letter and have at least two characters.");
+
+      return true;
+    }
+
+    if (!ProductDataValidator.validateProductPrice(productPrice)) {
+      applyErrorStyle(productPriceField);
+
+      PopupDialogs.showErrorDialog(
+          "Validation Error",
+          "Invalid Product Price",
+          "Price should be a number with up to two decimal places.");
+
+      return true;
+    }
+
+    if (!ProductDataValidator.validateProductQuantity(productQuantity)) {
+      applyErrorStyle(productQuantityField);
+
+      PopupDialogs.showErrorDialog(
+          "Validation Error",
+          "Invalid Product Quantity",
+          "Quantity should be a non-negative integer.");
+
+      return true;
+    }
+
+    return false;
+  }
+
+  private void clearProductDataInputFields(
+      TextField productNameField, TextField productPriceField, TextField productQuantityField) {
+    productNameField.clear();
+    productPriceField.clear();
+    productQuantityField.clear();
   }
 
   private void quitButtonClicked(Button workspaceSettingsQuitButton) {
@@ -163,5 +278,15 @@ public class EmployeeWorkspaceController {
 
     WindowSwitcher.switchWindow(
         workspaceSettingsQuitButton, "view/LogInPage.fxml", "Grocery Store Log In");
+  }
+
+  private void applyErrorStyle(TextField textField) {
+    textField.setStyle(textField.getStyle() + " -fx-border-color: red;");
+  }
+
+  private void removeErrorStyle(TextField textField) {
+    String currentStyle = textField.getStyle();
+    String newStyle = currentStyle.replace("-fx-border-color: red;", "");
+    textField.setStyle(newStyle);
   }
 }
