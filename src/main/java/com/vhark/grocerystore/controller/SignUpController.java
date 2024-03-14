@@ -51,11 +51,11 @@ public class SignUpController {
   }
 
   private void handleSignUp() {
-    String firstName = signUpFirstNameField.getText();
-    String lastName = signUpLastNameField.getText();
-    String middleName = signUpMiddleNameField.getText();
-    String idCode = signUpIdCodeField.getText();
-    String address = signUpAddressField.getText();
+    String firstName = signUpFirstNameField.getText().trim();
+    String lastName = signUpLastNameField.getText().trim();
+    String middleName = signUpMiddleNameField.getText().trim();
+    String idCode = signUpIdCodeField.getText().trim();
+    String address = signUpAddressField.getText().trim();
     String password = signUpPasswordField.getText();
     String passwordConfirmation = signUpPasswordConfirmField.getText();
 
