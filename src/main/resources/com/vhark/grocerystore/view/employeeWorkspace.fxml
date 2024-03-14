@@ -147,7 +147,7 @@
                            </Button>
                                 </children>
                             </VBox>
-                            <TableView fx:id="workspaceProductsTableView" layoutX="192.0" onMouseClicked="#selectItem" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #004643; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
+                            <TableView fx:id="workspaceProductsTableView" layoutX="192.0" onMouseClicked="#selectProductItem" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #004643; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
                                 <columns>
                                     <TableColumn fx:id="workspaceProductsNameColumn" maxWidth="316.0" minWidth="316.0" prefWidth="316.0" style="-fx-background-color: #008a85;" text="Name" />
                                     <TableColumn fx:id="workspaceProductsPriceColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: #00807b;" text="Price" />
@@ -423,11 +423,17 @@
                                     <TableColumn fx:id="workspaceClientPurchasesQuantityColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-background-color: #008a85;" text="Quantity" />
                                     <TableColumn fx:id="workspaceClientPurchasesDateColumn" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" style="-fx-background-color: #00807b;" text="Date" />
                                 </columns>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                             </TableView>
-                     <TableView fx:id="workspaceClientsTableView" layoutX="192.0" prefHeight="526.0" prefWidth="200.0" style="-fx-background-color: #005e5b; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
+                     <TableView fx:id="workspaceClientsTableView" layoutX="192.0" onMouseClicked="#selectClientItem" prefHeight="529.0" prefWidth="200.0" style="-fx-background-color: #005e5b; -fx-text-fill: #fffffe; -fx-border-color: #004643;">
                         <columns>
                            <TableColumn fx:id="workspaceClientIdCodeColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" resizable="false" style="-fx-background-color: #008a85;" text="Client ID code" />
                         </columns>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </TableView>
                         </children></AnchorPane>
                 </content>

@@ -5,13 +5,18 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.vhark.grocerystore.model.dao.ClientLoader;
 import com.vhark.grocerystore.model.dao.ProductEditor;
+import com.vhark.grocerystore.model.dao.ProductLoader;
 import com.vhark.grocerystore.model.entities.Product;
+import com.vhark.grocerystore.model.entities.User;
+import com.vhark.grocerystore.model.singletons.ClientDataSingleton;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
 import com.vhark.grocerystore.model.singletons.UserDataSingleton;
 import com.vhark.grocerystore.util.PopupDialogs;
 import com.vhark.grocerystore.util.ProductDataValidator;
 import com.vhark.grocerystore.util.WindowSwitcher;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,7 +39,7 @@ public class EmployeeWorkspaceController {
 
   @FXML private Label workspaceClientFirstNameLabel;
 
-  @FXML private TableColumn<?, ?> workspaceClientIdCodeColumn;
+  @FXML private TableColumn<User, String> workspaceClientIdCodeColumn;
 
   @FXML private Label workspaceClientIdCodeLabel;
 
@@ -54,7 +59,7 @@ public class EmployeeWorkspaceController {
 
   @FXML private Tab workspaceClientsTabButton;
 
-  @FXML private TableView<?> workspaceClientsTableView;
+  @FXML private TableView<User> workspaceClientsTableView;
 
   @FXML private Button workspaceDeleteClientButton;
 
@@ -113,7 +118,7 @@ public class EmployeeWorkspaceController {
   @FXML private Tab workspaceSettingsTabButton;
 
   @FXML
-  void selectItem(MouseEvent event) {
+  void selectProductItem(MouseEvent event) {
     Product product = workspaceProductsTableView.getSelectionModel().getSelectedItem();
 
     if (product != null) {
@@ -135,6 +140,23 @@ public class EmployeeWorkspaceController {
     }
   }
 
+  @FXML
+  void selectClientItem(MouseEvent event) {
+    User client = workspaceClientsTableView.getSelectionModel().getSelectedItem();
+
+    if (client != null) {
+      ClientDataSingleton clientDataSingleton = ClientDataSingleton.getInstance();
+      clientDataSingleton.setClientIdCOde(client.getIdCode());
+
+      workspaceClientIdCodeLabel.setText(client.getIdCode());
+
+      workspaceClientFirstNameLabel.setText(client.getFirstName());
+      workspaceClientLastNameLabel.setText(client.getLastName());
+      workspaceClientMiddleNameLabel.setText(client.getMiddleName());
+      workspaceClientAddressLabel.setText(client.getAddress());
+    }
+  }
+
   private void slidersInit() {
     ProductSearchControllerUtil.maxProductPriceSliderInit(
         workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
@@ -148,6 +170,7 @@ public class EmployeeWorkspaceController {
 
     ProductSearchControllerUtil.setProductTableColumns(
         workspaceProductsNameColumn, workspaceProductsPriceColumn, workspaceProductsQuantityColumn);
+    setClientTableColumn(workspaceClientIdCodeColumn);
 
     ProductSearchControllerUtil.loadProducts(
         workspaceProductsSearchField,
@@ -162,6 +185,7 @@ public class EmployeeWorkspaceController {
                 workspaceProductsSliderMaxPrice,
                 workspaceProductsSliderMinQuantity,
                 workspaceProductsTableView));
+    loadClients(workspaceClientsTableView);
 
     workspaceProductsResetButton.setOnAction(
         actionEvent ->
@@ -194,6 +218,21 @@ public class EmployeeWorkspaceController {
 
     workspaceSettingsQuitButton.setOnAction(
         actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
+  }
+
+  public void setClientTableColumn(TableColumn<User, String> workspaceClientIdCodeColumn) {
+    workspaceClientIdCodeColumn.setCellValueFactory(
+            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getIdCode()));
+  }
+
+  public void loadClients(TableView<User> workspaceClientsTableView) {
+    try {
+      workspaceClientsTableView.setItems(ClientLoader.loadClients());
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+              "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
   }
 
   private void deleteProductButtonClicked(Button productsSearchButton) {
