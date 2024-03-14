@@ -21,9 +21,9 @@ public final class ProductSearchControllerUtil {
         maxPriceSlider.setMax(dbMaxPrice);
         maxPriceSlider.setValue(dbMaxPrice);
         maxPriceSlider.setShowTickLabels(true);
-        maxPriceSlider.setMajorTickUnit(1.0);
+        maxPriceSlider.setMajorTickUnit(dbMaxPrice / 5);
         maxPriceSlider.setMinorTickCount(1);
-        maxPriceSlider.setBlockIncrement(0.05);
+        maxPriceSlider.setBlockIncrement(0.5);
 
         maxPriceSlider
                 .valueProperty()
@@ -42,8 +42,8 @@ public final class ProductSearchControllerUtil {
         minQuantitySlider.setMax(maxQuantity);
         minQuantitySlider.setValue(0.0);
         minQuantitySlider.setShowTickLabels(true);
-        minQuantitySlider.setMajorTickUnit(5.0);
-        minQuantitySlider.setMinorTickCount(10);
+        minQuantitySlider.setMajorTickUnit(10.0);
+        minQuantitySlider.setMinorTickCount(0);
         minQuantitySlider.setBlockIncrement(1.0);
 
         minQuantitySlider
