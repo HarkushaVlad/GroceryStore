@@ -2,22 +2,22 @@ package com.vhark.grocerystore.model.singletons;
 
 public class ClientDataSingleton {
 
-    private static final ClientDataSingleton instance = new ClientDataSingleton();
+  private static final ClientDataSingleton instance = new ClientDataSingleton();
 
-    private String ClientIdCOde;
+  private String ClientUserId;
 
-    private ClientDataSingleton() {}
-    ;
+  private ClientDataSingleton() {}
+  ;
 
-    public static ClientDataSingleton getInstance() {
-        return instance;
-    }
+  public static ClientDataSingleton getInstance() {
+    return instance;
+  }
 
-    public String getClientIdCOde() {
-        return ClientIdCOde;
-    }
+  public String getClientUserId() {
+    return ClientUserId;
+  }
 
-    public void setClientIdCOde(String ClientIdCOde) {
-        this.ClientIdCOde = ClientIdCOde;
-    }
+  public void setClientUserId(String ClientUserId) {
+    this.ClientUserId = ClientUserId;
+  }
 }

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.vhark.grocerystore.model.dao.ClientEditor;
 import com.vhark.grocerystore.model.dao.ClientLoader;
 import com.vhark.grocerystore.model.dao.ProductEditor;
 import com.vhark.grocerystore.model.dao.ProductLoader;
@@ -146,7 +147,7 @@ public class EmployeeWorkspaceController {
 
     if (client != null) {
       ClientDataSingleton clientDataSingleton = ClientDataSingleton.getInstance();
-      clientDataSingleton.setClientIdCOde(client.getIdCode());
+      clientDataSingleton.setClientUserId(client.getUserId());
 
       workspaceClientIdCodeLabel.setText(client.getIdCode());
 
@@ -218,21 +219,9 @@ public class EmployeeWorkspaceController {
 
     workspaceSettingsQuitButton.setOnAction(
         actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
-  }
 
-  public void setClientTableColumn(TableColumn<User, String> workspaceClientIdCodeColumn) {
-    workspaceClientIdCodeColumn.setCellValueFactory(
-            cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getIdCode()));
-  }
-
-  public void loadClients(TableView<User> workspaceClientsTableView) {
-    try {
-      workspaceClientsTableView.setItems(ClientLoader.loadClients());
-    } catch (SQLException e) {
-      e.printStackTrace();
-      PopupDialogs.showErrorDialog(
-              "Error", "Something went wrong", "Something went wrong, try again later.");
-    }
+    workspaceDeleteClientButton.setOnAction(
+        actionEvent -> deleteClientButtonClicked(workspaceClientsTableView));
   }
 
   private void deleteProductButtonClicked(Button productsSearchButton) {
@@ -249,7 +238,7 @@ public class EmployeeWorkspaceController {
       productsSearchButton.fire();
 
       PopupDialogs.showInformationDialog(
-          "Success", "Product Delete", "Product  has been successfully deleted");
+          "Success", "Product Delete", "Product has been successfully deleted");
     } catch (SQLException e) {
       e.printStackTrace();
       PopupDialogs.showErrorDialog(
@@ -397,6 +386,53 @@ public class EmployeeWorkspaceController {
     productNameField.clear();
     productPriceField.clear();
     productQuantityField.clear();
+  }
+
+  public void setClientTableColumn(TableColumn<User, String> workspaceClientIdCodeColumn) {
+    workspaceClientIdCodeColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getIdCode()));
+  }
+
+  public void loadClients(TableView<User> workspaceClientsTableView) {
+    try {
+      workspaceClientsTableView.setItems(ClientLoader.loadClients());
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private void deleteClientButtonClicked(TableView<User> workspaceClientsTableView) {
+    String clientUserId = ClientDataSingleton.getInstance().getClientUserId();
+
+    if (isClientNotSelected(clientUserId)) {
+      return;
+    }
+
+    try {
+      ClientEditor.deleteClient(clientUserId);
+
+      loadClients(workspaceClientsTableView);
+      ;
+
+      PopupDialogs.showInformationDialog(
+          "Success", "Client Delete", "Client has been successfully deleted");
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private boolean isClientNotSelected(String clientUserId) {
+    if (clientUserId == null) {
+      PopupDialogs.showErrorDialog(
+          "Error", "No Client Selected", "Please select a client before proceeding.");
+      return true;
+    }
+
+    return false;
   }
 
   private void quitButtonClicked(Button workspaceSettingsQuitButton) {
