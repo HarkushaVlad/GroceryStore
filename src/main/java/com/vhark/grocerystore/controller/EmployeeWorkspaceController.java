@@ -58,6 +58,8 @@ public class EmployeeWorkspaceController {
 
   @FXML private Button workspaceDeleteClientButton;
 
+  @FXML private Button workspaceDeleteProductButton;
+
   @FXML private Button workspaceProductsAddProductButton;
 
   @FXML private TextField workspaceProductsAddProductNameField;
@@ -77,6 +79,8 @@ public class EmployeeWorkspaceController {
   @FXML private Label workspaceProductsEditProductQuantityLabel;
 
   @FXML private Label workspaceProductsEditSelectedProductNameLabel;
+
+  @FXML private Label workspaceProductsEditSelectedProductNameLabel1;
 
   @FXML private Label workspaceProductsMaxPriceLabel;
 
@@ -117,18 +121,24 @@ public class EmployeeWorkspaceController {
       productDataSingleton.setProductId(product.getProductId());
       workspaceProductsEditSelectedProductNameLabel.setText(
           "Selected: " + product.getProductName());
+      workspaceProductsEditSelectedProductNameLabel1.setText(
+          "Selected: " + product.getProductName());
       workspaceProductsEditProductPriceLabel.setText("Product price: " + product.getPrice());
       workspaceProductsEditProductQuantityLabel.setText(
           "Product quantity: " + product.getQuantity());
     }
   }
 
+  private void slidersInit() {
+    ProductSearchControllerUtil.maxProductPriceSliderInit(
+            workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
+    ProductSearchControllerUtil.minProductQuantitySliderInit(
+            workspaceProductsSliderMinQuantity, workspaceProductsMinQuantityLabel);
+  }
+
   @FXML
   void initialize() {
-    ProductSearchControllerUtil.maxProductPriceSliderInit(
-        workspaceProductsSliderMaxPrice, workspaceProductsMaxPriceLabel);
-    ProductSearchControllerUtil.minProductQuantitySliderInit(
-        workspaceProductsSliderMinQuantity, workspaceProductsMinQuantityLabel);
+    slidersInit();
 
     ProductSearchControllerUtil.setProductTableColumns(
         workspaceProductsNameColumn, workspaceProductsPriceColumn, workspaceProductsQuantityColumn);
@@ -157,6 +167,9 @@ public class EmployeeWorkspaceController {
                 workspaceProductsMinQuantityLabel,
                 workspaceProductsTableView));
 
+    workspaceDeleteProductButton.setOnAction(
+        actionEvent -> deleteProductButtonClicked(workspaceProductsSearchButton));
+
     workspaceProductsSaveEditButton.setOnAction(
         actionEvent ->
             saveEditButtonClicked(
@@ -175,6 +188,27 @@ public class EmployeeWorkspaceController {
 
     workspaceSettingsQuitButton.setOnAction(
         actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
+  }
+
+  private void deleteProductButtonClicked(Button productsSearchButton) {
+    String productId = ProductDataSingleton.getInstance().getProductId();
+
+    if (isProductNotSelected(productId)) {
+      return;
+    }
+
+    try {
+      ProductEditor.deleteProduct(productId);
+
+      productsSearchButton.fire();
+
+      PopupDialogs.showInformationDialog(
+          "Success", "Product Delete", "Product  has been successfully deleted");
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
   }
 
   private void saveEditButtonClicked(
@@ -200,6 +234,7 @@ public class EmployeeWorkspaceController {
     try {
       ProductEditor.editProduct(productId, productName, productPrice, productQuantity);
 
+      slidersInit();
       productsSearchButton.fire();
 
       PopupDialogs.showInformationDialog(
@@ -238,12 +273,11 @@ public class EmployeeWorkspaceController {
     try {
       ProductEditor.addProduct(productName, productPrice, productQuantity);
 
+      slidersInit();
       productsSearchButton.fire();
 
       PopupDialogs.showInformationDialog(
-          "Success",
-          "Product Add",
-          "Product " + productName + " has been successfully added");
+          "Success", "Product Add", "Product " + productName + " has been successfully added");
 
       clearProductDataInputFields(productNameField, productPriceField, productQuantityField);
 
@@ -258,6 +292,16 @@ public class EmployeeWorkspaceController {
       PopupDialogs.showErrorDialog(
           "Error", "Something went wrong", "Something went wrong, try again later.");
     }
+  }
+
+  private boolean isProductNotSelected(String productId) {
+    if (productId == null) {
+      PopupDialogs.showErrorDialog(
+          "Error", "No Product Selected", "Please select a product before proceeding.");
+      return true;
+    }
+
+    return false;
   }
 
   private boolean isInvalidProductDataInput(
@@ -283,7 +327,7 @@ public class EmployeeWorkspaceController {
       PopupDialogs.showErrorDialog(
           "Validation Error",
           "Invalid Product Price",
-          "Price should be a number with up to two decimal places.");
+          "Price should be a number with up to two decimal places and lower than 10000.");
 
       return true;
     }
@@ -294,7 +338,7 @@ public class EmployeeWorkspaceController {
       PopupDialogs.showErrorDialog(
           "Validation Error",
           "Invalid Product Quantity",
-          "Quantity should be a non-negative integer.");
+          "Quantity should be a non-negative integer and lower than 10000.");
 
       return true;
     }

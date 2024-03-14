@@ -126,6 +126,25 @@
                                             <Insets left="5.0" right="5.0" />
                                         </VBox.margin>
                                     </Button>
+                           <Label fx:id="workspaceProductsEditSelectedProductNameLabel1" alignment="CENTER" prefHeight="17.0" prefWidth="177.0" text="No product selected" textAlignment="CENTER" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets bottom="4.0" left="5.0" right="5.0" top="143.0" />
+                              </VBox.margin>
+                           </Label>
+                           <Button fx:id="workspaceDeleteProductButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="218.0" style="-fx-background-color: #b5001b; -fx-background-radius: 5; -fx-background-insets: 0;" text="Delete product" textFill="#fffffe">
+                              <font>
+                                 <Font name="Arial Black" size="12.0" />
+                              </font>
+                              <cursor>
+                                 <Cursor fx:constant="HAND" />
+                              </cursor>
+                              <VBox.margin>
+                                 <Insets left="5.0" right="5.0" />
+                              </VBox.margin>
+                           </Button>
                                 </children>
                             </VBox>
                             <TableView fx:id="workspaceProductsTableView" layoutX="192.0" onMouseClicked="#selectItem" prefHeight="528.0" prefWidth="516.0" style="-fx-background-color: #004643; -fx-text-fill: #fffffe; -fx-border-color: #004643;">

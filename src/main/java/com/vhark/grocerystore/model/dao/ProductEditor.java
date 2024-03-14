@@ -31,7 +31,7 @@ public final class ProductEditor {
 
         try (PreparedStatement updateProductStatement =
             connection.prepareStatement(sqlUpdateProduct)) {
-          updateProductStatement.setString(1, productName);
+          updateProductStatement.setString(1, productName.trim());
           updateProductStatement.setBigDecimal(2, new BigDecimal(productPrice));
           updateProductStatement.setInt(3, parseInt(productQuantity));
           updateProductStatement.setInt(4, parseInt(productId));
@@ -47,7 +47,6 @@ public final class ProductEditor {
       throws SQLException {
 
     if (ProductDataValidator.validateAllProductData(productName, productPrice, productQuantity)) {
-
       String sqlInsertProduct =
           "INSERT INTO products(product_name, price, quantity) VALUES(?, ?, ?)";
 
@@ -57,7 +56,7 @@ public final class ProductEditor {
 
         try (PreparedStatement updateProductStatement =
             connection.prepareStatement(sqlInsertProduct)) {
-          updateProductStatement.setString(1, productName);
+          updateProductStatement.setString(1, productName.trim());
           updateProductStatement.setBigDecimal(2, new BigDecimal(productPrice));
           updateProductStatement.setInt(3, parseInt(productQuantity));
           updateProductStatement.execute();
@@ -65,6 +64,21 @@ public final class ProductEditor {
       }
     } else {
       throw new IllegalArgumentException("Invalid product data input");
+    }
+  }
+
+  public static void deleteProduct(String productId) throws SQLException {
+    String sqlDeleteProduct = "DELETE FROM products WHERE product_id = ?";
+
+    try (Connection connection =
+        DatabaseHandler.getDbConnection(
+            DbUsers.EMPLOYEE.getLoginName(), DbUsers.EMPLOYEE.getPassword())) {
+
+      try (PreparedStatement deleteProductStatement =
+          connection.prepareStatement(sqlDeleteProduct)) {
+        deleteProductStatement.setString(1, productId);
+        deleteProductStatement.execute();
+      }
     }
   }
 }
