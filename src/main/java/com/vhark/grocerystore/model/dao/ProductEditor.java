@@ -42,4 +42,29 @@ public final class ProductEditor {
       throw new IllegalArgumentException("Invalid product data input");
     }
   }
+
+  public static void addProduct(String productName, String productPrice, String productQuantity)
+      throws SQLException {
+
+    if (ProductDataValidator.validateAllProductData(productName, productPrice, productQuantity)) {
+
+      String sqlInsertProduct =
+          "INSERT INTO products(product_name, price, quantity) VALUES(?, ?, ?)";
+
+      try (Connection connection =
+          DatabaseHandler.getDbConnection(
+              DbUsers.EMPLOYEE.getLoginName(), DbUsers.EMPLOYEE.getPassword())) {
+
+        try (PreparedStatement updateProductStatement =
+            connection.prepareStatement(sqlInsertProduct)) {
+          updateProductStatement.setString(1, productName);
+          updateProductStatement.setBigDecimal(2, new BigDecimal(productPrice));
+          updateProductStatement.setInt(3, parseInt(productQuantity));
+          updateProductStatement.execute();
+        }
+      }
+    } else {
+      throw new IllegalArgumentException("Invalid product data input");
+    }
+  }
 }

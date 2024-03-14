@@ -165,6 +165,14 @@ public class EmployeeWorkspaceController {
                 workspaceProductsEditProductQuantityField,
                 workspaceProductsSearchButton));
 
+    workspaceProductsAddProductButton.setOnAction(
+        actionEvent ->
+            addProductButtonClicked(
+                workspaceProductsAddProductNameField,
+                workspaceProductsAddProductPriceField,
+                workspaceProductsAddProductQuantityField,
+                workspaceProductsSearchButton));
+
     workspaceSettingsQuitButton.setOnAction(
         actionEvent -> quitButtonClicked(workspaceSettingsQuitButton));
   }
@@ -179,8 +187,13 @@ public class EmployeeWorkspaceController {
     String productPrice = productPriceField.getText();
     String productQuantity = productQuantityField.getText();
 
-    if (isInvalidProductDataInput(
-        productId, productNameField, productPriceField, productQuantityField)) {
+    if (productId == null) {
+      PopupDialogs.showErrorDialog(
+          "Error", "No Product Selected", "Please select a product before proceeding.");
+      return;
+    }
+
+    if (isInvalidProductDataInput(productNameField, productPriceField, productQuantityField)) {
       return;
     }
 
@@ -209,20 +222,49 @@ public class EmployeeWorkspaceController {
     }
   }
 
-  private boolean isInvalidProductDataInput(
-      String productId,
+  private void addProductButtonClicked(
       TextField productNameField,
       TextField productPriceField,
-      TextField productQuantityField) {
+      TextField productQuantityField,
+      Button productsSearchButton) {
     String productName = productNameField.getText();
     String productPrice = productPriceField.getText();
     String productQuantity = productQuantityField.getText();
 
-    if (productId == null) {
-      PopupDialogs.showErrorDialog(
-          "Error", "No Product Selected", "Please select a product before proceeding.");
-      return true;
+    if (isInvalidProductDataInput(productNameField, productPriceField, productQuantityField)) {
+      return;
     }
+
+    try {
+      ProductEditor.addProduct(productName, productPrice, productQuantity);
+
+      productsSearchButton.fire();
+
+      PopupDialogs.showInformationDialog(
+          "Success",
+          "Product Add",
+          "Product " + productName + " has been successfully added");
+
+      clearProductDataInputFields(productNameField, productPriceField, productQuantityField);
+
+      removeErrorStyle(productNameField);
+      removeErrorStyle(productPriceField);
+      removeErrorStyle(productQuantityField);
+    } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog("Error", "Illegal arguments", "Invalid product data input");
+    } catch (SQLException e) {
+      e.printStackTrace();
+      PopupDialogs.showErrorDialog(
+          "Error", "Something went wrong", "Something went wrong, try again later.");
+    }
+  }
+
+  private boolean isInvalidProductDataInput(
+      TextField productNameField, TextField productPriceField, TextField productQuantityField) {
+    String productName = productNameField.getText();
+    String productPrice = productPriceField.getText();
+    String productQuantity = productQuantityField.getText();
 
     if (!ProductDataValidator.validateProductName(productName)) {
       applyErrorStyle(productNameField);
