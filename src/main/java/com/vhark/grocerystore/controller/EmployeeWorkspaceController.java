@@ -2,14 +2,13 @@ package com.vhark.grocerystore.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.vhark.grocerystore.model.dao.ClientEditor;
-import com.vhark.grocerystore.model.dao.ClientLoader;
-import com.vhark.grocerystore.model.dao.ProductEditor;
-import com.vhark.grocerystore.model.dao.ProductLoader;
+import com.vhark.grocerystore.model.dao.*;
 import com.vhark.grocerystore.model.entities.Product;
+import com.vhark.grocerystore.model.entities.TablePurchase;
 import com.vhark.grocerystore.model.entities.User;
 import com.vhark.grocerystore.model.singletons.ClientDataSingleton;
 import com.vhark.grocerystore.model.singletons.ProductDataSingleton;
@@ -48,15 +47,15 @@ public class EmployeeWorkspaceController {
 
   @FXML private Label workspaceClientMiddleNameLabel;
 
-  @FXML private TableColumn<?, ?> workspaceClientPurchasesDateColumn;
+  @FXML private TableColumn<TablePurchase, Date> workspaceClientPurchasesDateColumn;
 
-  @FXML private TableColumn<?, ?> workspaceClientPurchasesNameColumn;
+  @FXML private TableColumn<TablePurchase, String> workspaceClientPurchasesNameColumn;
 
-  @FXML private TableColumn<?, ?> workspaceClientPurchasesPriceColumn;
+  @FXML private TableColumn<TablePurchase, Double> workspaceClientPurchasesPriceColumn;
 
-  @FXML private TableColumn<?, ?> workspaceClientPurchasesQuantityColumn;
+  @FXML private TableColumn<TablePurchase, Integer> workspaceClientPurchasesQuantityColumn;
 
-  @FXML private TableView<?> workspaceClientPurchasesTableView;
+  @FXML private TableView<TablePurchase> workspaceClientPurchasesTableView;
 
   @FXML private Tab workspaceClientsTabButton;
 
@@ -155,6 +154,15 @@ public class EmployeeWorkspaceController {
       workspaceClientLastNameLabel.setText(client.getLastName());
       workspaceClientMiddleNameLabel.setText(client.getMiddleName());
       workspaceClientAddressLabel.setText(client.getAddress());
+
+      try {
+        workspaceClientPurchasesTableView.setItems(
+            TablePurchaseLoader.loadPurchases(client.getIdCode()));
+      } catch (SQLException e) {
+        e.printStackTrace();
+        PopupDialogs.showErrorDialog(
+            "Error", "Something went wrong", "Something went wrong, try again later.");
+      }
     }
   }
 
@@ -172,6 +180,11 @@ public class EmployeeWorkspaceController {
     ProductSearchControllerUtil.setProductTableColumns(
         workspaceProductsNameColumn, workspaceProductsPriceColumn, workspaceProductsQuantityColumn);
     setClientTableColumn(workspaceClientIdCodeColumn);
+    setClientPurchasesTableColumn(
+        workspaceClientPurchasesNameColumn,
+        workspaceClientPurchasesPriceColumn,
+        workspaceClientPurchasesQuantityColumn,
+        workspaceClientPurchasesDateColumn);
 
     ProductSearchControllerUtil.loadProducts(
         workspaceProductsSearchField,
@@ -391,6 +404,24 @@ public class EmployeeWorkspaceController {
   public void setClientTableColumn(TableColumn<User, String> workspaceClientIdCodeColumn) {
     workspaceClientIdCodeColumn.setCellValueFactory(
         cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getIdCode()));
+  }
+
+  public void setClientPurchasesTableColumn(
+      TableColumn<TablePurchase, String> workspaceClientPurchasesNameColumn,
+      TableColumn<TablePurchase, Double> storePurchasesPriceColumn,
+      TableColumn<TablePurchase, Integer> storePurchasesQuantityColumn,
+      TableColumn<TablePurchase, Date> storePurchasesDateColumn) {
+    workspaceClientPurchasesNameColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getProductName()));
+
+    storePurchasesPriceColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getTotalCost()));
+
+    storePurchasesQuantityColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getQuantityPurchased()));
+
+    storePurchasesDateColumn.setCellValueFactory(
+        cellData -> Bindings.createObjectBinding(() -> cellData.getValue().getPurchaseDate()));
   }
 
   public void loadClients(TableView<User> workspaceClientsTableView) {
